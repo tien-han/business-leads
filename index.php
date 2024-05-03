@@ -24,6 +24,26 @@
         echo $view->render('views/homepage.html');
     });
 
+    //Route to our contact us page
+    $f3-> route('GET|POST /contact', function($f3) {
+        var_dump($_POST);
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $firstName = $_POST['firstName'];
+            $f3->set('SESSION.firstName', $firstName);
+            $lastName = $_POST['lastName'];
+            $f3->set('SESSION.lastName', $lastName);
+            $email = $_POST['email'];
+            $f3->set('SESSION.email', $email);
+            $concern= $_POST['concern'];
+            $f3->set('SESSION.concern', $concern);
+        }
+
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/contact.html');
+    });
+
     //Run Fat-Free
     $f3->run();
 ?>
