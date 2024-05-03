@@ -1,0 +1,21 @@
+{
+  "name": "smarkwardt/328/pets2",
+  "authors": [
+    {
+      "name": "Sage Markwardt",
+      "email": "sagemarkwardt@gmail.com"
+    },
+    {
+      "name": "Garrett Ballreich",
+      "email": "garrett.ballreich101@gmail.com"
+    },
+    {
+      "name": "Tien Han",
+      "email": "tienthuyhan@gmail.com"
+    }
+  ],
+  "require":
+  {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
