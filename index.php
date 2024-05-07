@@ -26,8 +26,6 @@
 
     //Route to our contact us page
     $f3-> route('GET|POST /contact', function($f3) {
-        var_dump($_POST);
-
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $firstName = $_POST['firstName'];
             $f3->set('SESSION.firstName', $firstName);
@@ -42,6 +40,20 @@
         //Render a view page
         $view = new Template();
         echo $view->render('views/contact.html');
+    });
+
+    //Define the FAQ route
+    $f3-> route('GET /FAQ', function() {
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/faq.html');
+    });
+
+    //Define the Login route
+    $f3-> route('GET /login', function() {
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/login.html');
     });
 
     //Run Fat-Free
