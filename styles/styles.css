@@ -1,0 +1,21 @@
+/* ------------------------------Style Dependencies------------------------------ */
+
+
+/* ------------------------------Global Styles------------------------------ */
+
+
+
+/* ------------------------------Site-wide Used Styles------------------------------ */
+
+
+
+/* ------------------------------Navbar Styling------------------------------ */
+.navbar {
+    background-color: #f2f1ef;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+    text-decoration-color: #ffc400;
+    text-decoration-thickness: 5px;
+}
