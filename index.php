@@ -56,6 +56,14 @@
         echo $view->render('views/login.html');
     });
 
+    //Define the MAIN FORM route
+    $f3-> route('GET|POST /Form', function() {
+        var_dump($_POST);
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/form.html');
+    });
+
     //Run Fat-Free
     $f3->run();
 ?>

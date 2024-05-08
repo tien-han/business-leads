@@ -59,3 +59,11 @@ h4{
     margin-left: 40%;
     margin-top: 5%;
 }
+/*----------------STYLES FOR MAIN FORM---------------------------*/
+.mainForm{
+    width: 50%;
+    margin-left: 25%;
+}
+select{
+    margin-left: 7%;
+}
