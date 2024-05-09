@@ -93,7 +93,7 @@
 
     //Define the MAIN FORM route
     $f3-> route('GET|POST /Form', function() {
-        var_dump($_POST);
+        //var_dump($_POST);
         //Render a view page
         $view = new Template();
         echo $view->render('views/form.html');
