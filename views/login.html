@@ -18,12 +18,10 @@
                     <a class="nav-link" type="text/html" href="{{ @BASE }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" type="text/html" href="contact">Contact Us
-                    </a>
+                    <a class="nav-link" type="text/html" href="contact">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" type="text/html" href="FAQ">FAQ
-                    </a>
+                    <a class="nav-link" type="text/html" href="FAQ">FAQ</a>
                 </li>
             </ul>
             <a class="ms-auto me-3 nav-link active" type="text/html" href="login">Login</a>
@@ -39,12 +37,12 @@
                 <label for="email" class="form-label"><b>Email</b></label>
                 <span class="text-danger">{{ @SESSION.emailError }}</span>
                 <input class="form-control" name="email" id="email" type="text" placeholder="name@ups.com"
-                       minlength="1" value="{{ @SESSION.email }}">
+                       minlength="1" value="{{ @SESSION.email }}" required>
                 <!--Password-->
                 <label for="password" class="form-label"><b>Password</b></label>
                 <span class="text-danger">{{ @SESSION.passwordError }}</span>
                 <input class="form-control" name="password" id="password" type="text" placeholder="password here"
-                       minlength="1" value="{{ @SESSION.password }}">
+                       minlength="1" value="{{ @SESSION.password }}" required>
                 <!--Button for Form Submission-->
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
