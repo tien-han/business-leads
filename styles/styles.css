@@ -66,3 +66,17 @@ select{
     margin-top: 5%;
     margin-bottom: 5%;
 }
+
+/*-------- Styles for FAQ page / accordion menu -------*/
+.accordion-button {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#FAQ h2 {
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: .5em;
+    text-decoration-color: #ffc400;
+    text-decoration-thickness: 5px;
+}
