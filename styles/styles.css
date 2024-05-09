@@ -1,7 +1,7 @@
 /*
  * Custom styles for the Business leads application
  * @author Garrett Ballreich, Sage Markwardt, Tien Han
- * @date 5/7/2024
+ * @date 5/8/2024
  * @version 1.0
  */
 
@@ -11,9 +11,7 @@
 /* ------------------------------Global Styles------------------------------ */
 
 
-
 /* ------------------------------Site-wide Used Styles------------------------------ */
-
 
 
 /* ------------------------------Navbar Styling------------------------------ */
@@ -26,14 +24,8 @@
     text-decoration-color: #ffc400;
     text-decoration-thickness: 5px;
 }
+
 /*----------------STYLES FOR CONTACT FORM---------------------------*/
-.contactForm{
-    border: solid grey 2px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 5%;
-}
 input[type=text] {
     width: 80%;
     padding: 12px 20px;
@@ -55,10 +47,7 @@ button{
    margin-left: 45%;
    margin-bottom: 2%;
 }
-h4{
-    margin-left: 40%;
-    margin-top: 5%;
-}
+
 /*----------------STYLES FOR MAIN FORM---------------------------*/
 .mainForm{
     width: 50%;
@@ -66,4 +55,14 @@ h4{
 }
 select{
     margin-left: 7%;
+}
+
+/*----------------Form Styles---------------------------*/
+.form-container {
+    border: solid grey 2px;
+    border-radius: 25px;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }

@@ -14,6 +14,9 @@
     //Require the autoload file
     require_once('vendor/autoload.php');
 
+    //Require the form validation file
+    require_once('model/validate.php');
+
     //Instantiate the F3 Base class (Fat-Free)
     $f3 = Base::instance();
 
@@ -50,7 +53,39 @@
     });
 
     //Define the Login route
-    $f3-> route('GET /login', function() {
+    $f3-> route('GET|POST /login', function($f3) {
+        //If the user has submitted a post request (filled out the login form)
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Get submitted form data
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            $allValid = true;
+
+            //Perform validation on the submitted username (email)
+            $emailError = '';
+            if (!empty($email)) {
+                if (!validEmail($email)) {
+                    $allValid = false;
+                    $emailError = 'Please enter in a valid UPS email!';
+                }
+            } else {
+                //Email is required
+                $allValid = false;
+                $emailError = 'Please enter an email.';
+            }
+            $f3->set('SESSION.email', $email);
+            $f3->set('SESSION.emailError', $emailError);
+
+            //TODO: Add in password validation
+
+            //TODO: Redirect once we have the page
+            //Redirect to the application dashboard
+            //if ($allValid) {
+            //    $f3->reroute("application-form/experience");
+            //}
+        }
+
         //Render a view page
         $view = new Template();
         echo $view->render('views/login.html');
