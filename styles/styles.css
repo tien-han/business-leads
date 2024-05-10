@@ -52,12 +52,6 @@
     text-decoration-thickness: 5px;
 }
 
-/*----------------------STYLES FOR MAIN FORM---------------------------*/
-.mainForm {
-    width: 50%;
-    margin-left: 25%;
-}
-
 /*----------------- Styles for FAQ page / accordion menu ----------------*/
 .accordion-button {
     box-sizing: border-box;
