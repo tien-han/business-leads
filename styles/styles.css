@@ -81,7 +81,8 @@ textarea {
 /*----------------- Styles for FAQ page / accordion menu ----------------*/
 .accordion-button {
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
+    margin: 0;
 }
 
 #FAQ h2 {
@@ -92,13 +93,25 @@ textarea {
     text-decoration-thickness: 5px;
 }
 
-.accordion-button {
-    margin: 2.5rem;
+.accordion-item {
+    margin: 1.5rem;
+    padding: 1rem;
     /* creates a shadow around the button box */
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    border-radius: 1%;
 }
 
-.accordion-button:hover {
+.accordion-item:hover {
     /* emphasizes the shadow when hovered over */
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 10px 25px 0 rgba(0,0,0,0.19);
+}
+
+.accordion-header {
+    text-align: center;
+    margin-left: 0;
+}
+
+.accordion-button :not(.collapsed){
+    /* changes question to bold when expanded*/
+    font-weight: bold;
 }
