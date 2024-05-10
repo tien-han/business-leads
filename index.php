@@ -46,7 +46,7 @@
     });
 
     //Define the FAQ route
-    $f3-> route('GET /FAQ', function() {
+    $f3-> route('GET /faq', function() {
         //Render a view page
         $view = new Template();
         echo $view->render('views/faq.html');
@@ -92,7 +92,7 @@
     });
 
     //Define the MAIN FORM route
-    $f3-> route('GET|POST /Form', function() {
+    $f3-> route('GET|POST /form', function() {
         //var_dump($_POST);
         //Render a view page
         $view = new Template();
