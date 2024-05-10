@@ -1,7 +1,7 @@
 /*
  * Custom styles for the Business leads application
  * @author Garrett Ballreich, Sage Markwardt, Tien Han
- * @date 5/8/2024
+ * @date 5/10/2024
  * @version 1.0
  */
 
@@ -9,38 +9,9 @@
 
 
 /* --------------------------------Global Styles--------------------------------- */
-/*Used in Contact Form*/
-button {
-    margin-left: 45%;
-    margin-bottom: 2%;
-}
-
-/*Used in Contact Form*/
-input[type=text] {
-    width: 80%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    margin-left: 55px;
-}
-
-/*Used in Contact Form*/
-label {
-    margin-left: 55px;
-}
-
 /*Used in Main Form*/
 select {
     margin-left: 7%;
-}
-
-/*Used in Contact Form*/
-textarea {
-    width: 80%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    margin-left: 55px;
 }
 
 /* ------------------------------Navbar Styling------------------------------ */
@@ -56,13 +27,25 @@ textarea {
 }
 
 /*----------------------------Form Styles---------------------------------*/
-.form-container {
-    border: solid grey 2px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+/*Form Container styling for mobile screens*/
+@media (max-width: 320px) {
+    .form-container {
+        border: solid grey 2px;
+        border-radius: 25px;
+        margin: 5%;
+    }
+}
+
+/*Form Container styling for larger screens*/
+@media (min-width: 321px) {
+    .form-container {
+        border: solid grey 2px;
+        border-radius: 25px;
+        width: 50%;
+        margin-left: 25%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
 }
 
 .form-header {
