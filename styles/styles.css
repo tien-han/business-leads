@@ -80,3 +80,14 @@ select{
     text-decoration-color: #ffc400;
     text-decoration-thickness: 5px;
 }
+
+.accordion-button {
+    margin: 2.5rem;
+    /* creates a shadow around the button box */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.accordion-button:hover {
+    /* emphasizes the shadow when hovered over */
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
