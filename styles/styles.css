@@ -27,21 +27,23 @@
 /*Form Container styling for mobile screens*/
 @media (max-width: 320px) {
     .form-container {
-        border: solid grey 2px;
+        border: solid grey 1px;
         border-radius: 25px;
         margin: 5%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
     }
 }
 
 /*Form Container styling for larger screens*/
 @media (min-width: 321px) {
     .form-container {
-        border: solid grey 2px;
+        border: solid grey 1px;
         border-radius: 25px;
         width: 50%;
         margin-left: 25%;
         margin-top: 5%;
         margin-bottom: 5%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
     }
 }
 
@@ -83,9 +85,4 @@
 .accordion-header {
     text-align: center;
     margin-left: 0;
-}
-
-.accordion-button :not(.collapsed){
-    /* changes question to bold when expanded*/
-    font-weight: bold;
 }
