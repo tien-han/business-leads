@@ -1,5 +1,5 @@
 <!--
-    @author: Tien Han
+    @author: Tien Han, Sage Markwardt
     @date: 5/10/2024
     @description: Login page for the UPS Business Leads website
 -->
@@ -37,7 +37,7 @@
     <div>
         <!--Form for logging in-->
         <form action="#" method="post" class="form-container p-5">
-            <h4 class="text-center mt-3 form-header">Login</h4>
+            <h4 class="text-center mt-3 form-header">Log In</h4>
             <!--Email-->
             <label for="email" class="form-label mt-3"><b>Email</b></label>
             <span class="text-danger">{{ @SESSION.emailError }}</span>
@@ -48,6 +48,8 @@
             <span class="text-danger">{{ @SESSION.passwordError }}</span>
             <input class="form-control" name="password" id="password" type="text" placeholder="password here"
                    minlength="1" value="{{ @SESSION.password }}" required>
+            <!-- Sign up -->
+            <p class = "text-end m-2">Don't have an account? <a href = "sign-up">Sign Up</a></p>
             <!--Button for Form Submission-->
             <div class="d-flex justify-content-center">
                 <button class="btn btn-primary mt-3" type="submit">Submit</button>

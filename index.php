@@ -91,6 +91,14 @@
         echo $view->render('views/login.html');
     });
 
+    // define the signup route
+    $f3-> route('GET|POST /sign-up', function() {
+        //var_dump($_POST);
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/sign-up.html');
+    });
+
     //Define the MAIN FORM route
     $f3-> route('GET|POST /form', function() {
         //var_dump($_POST);
