@@ -94,6 +94,7 @@
     // define the signup route
     $f3-> route('GET|POST /sign-up', function() {
         //var_dump($_POST);
+        // TODO: add in validations
         //Render a view page
         $view = new Template();
         echo $view->render('views/sign-up.html');
