@@ -86,3 +86,21 @@
     text-align: center;
     margin-left: 0;
 }
+
+/*----------------- Styles for dashboard ----------------*/
+.followup{
+    margin-left: 2%;
+}
+.table{
+    width: 100%;
+}
+.width{
+    width: 100%;
+}
+.footer{
+    background-color: #330000;
+    width:100%;
+    color: white;
+    height: 125px;
+    margin-top: 22%;
+}

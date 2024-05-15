@@ -1,0 +1,131 @@
+<include href="views/header.html"></include>
+<body>
+<!--  Navbar  -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" type="text/html" href="{{ @BASE }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" type="text/html" href="contact">Contact Us
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" type="text/html" href="faq">FAQ
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" type="text/html" href="form">Main Form
+                </a>
+            </li>
+        </ul>
+        <a class="ms-auto me-3 nav-link" type="text/html" href="login">Login</a>
+    </div>
+</nav>
+<p>Main dashboard page</p>
+<div class="container">
+    <div class="row">
+        <div class="col-8 border border-dark">
+            <table class="table">
+                <tr>
+                    <td>UPS</td>
+                    <td>550 Andover PK west</td>
+                    <td>555 555 5555</td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">Add follow up</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>REI</td>
+                    <td>330 Andover PK west</td>
+                    <td>444 444 4444</td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">Add follow up</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Bed Bath & Beyond</td>
+                    <td>310 Andover PK west</td>
+                    <td>333 333 3333</td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">Add follow up</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Target</td>
+                    <td>550 Strander BLVD</td>
+                    <td>222 222 2222</td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">Add follow up</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Seattle Chocolates</td>
+                    <td>100 Andover PK W</td>
+                    <td>111 111 1111</td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">Add follow up</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="col-3 border border-dark followup">
+            <p>follow up info here</p>
+            <table>
+                <tr>
+                    <td>
+                        <p>Meeting with UPS - 05/15/2024 @ 15:00</p>
+                    </td>
+                    <td><button class="btn btn-success" type="submit">Edit</button></td>
+                    <td><button class="btn btn-danger" type="submit">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p>Meeting with Target - 05/16/2024 @ 15:00</p>
+                    </td>
+                    <td><button class="btn btn-success" type="submit">Edit</button></td>
+                    <td><button class="btn btn-danger" type="submit">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p>Meeting with Seattle Chocolates - 05/17/2024 @ 15:00</p>
+                    </td>
+                    <td><button class="btn btn-success" type="submit">Edit</button></td>
+                    <td><button class="btn btn-danger" type="submit">Delete</button></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>footer data</p>
+</div>

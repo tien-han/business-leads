@@ -108,6 +108,13 @@
         echo $view->render('views/form.html');
     });
 
+//Define the dashboard route
+$f3-> route('GET /dashboard', function() {
+    //Render a view page
+    $view = new Template();
+    echo $view->render('views/dashboard.html');
+});
+
     //Run Fat-Free
     $f3->run();
 ?>
