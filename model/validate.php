@@ -59,3 +59,8 @@ function validAddress($address){
 function validPhone($phone){
    return strlen($phone)===10 && is_numeric($phone);
 }
+
+//check for valid email address
+function validEmail($email){
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+}

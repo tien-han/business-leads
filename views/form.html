@@ -78,9 +78,19 @@
             <!--Contact Email-->
             <label for="email" class="form-label mt-3"><b>Contact Email</b></label>
             <input class="form-control" type="text" name="email" id="email">
+            <br>
+            <check if="{{ isset(@errors['contactEmailError']) }}">
+                <span class="err">{{ @errors['contactEmailError']}}</span>
+            </check>
+            <br>
             <!--Driver Name-->
             <label for="driverName" class="form-label mt-3"><b>Driver Name</b></label>
             <input class="form-control" type="text" name="driverName" id="driverName">
+            <br>
+            <check if="{{ isset(@errors['driverNameError']) }}">
+                <span class="err">{{ @errors['driverNameError']}}</span>
+            </check>
+            <br>
             <!--Driver Employee ID-->
             <label for="driverID" class="form-label mt-3"><b>Driver Employee ID</b></label>
             <input class="form-control" type="text" name="driverID" id="driverID">

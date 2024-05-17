@@ -155,6 +155,20 @@
                 $f3->set('errors["businessPhoneError"]',"please enter a valid phone number");
             }
 
+            //validate email
+            if(validEmail($contactEmail)){
+                $f3->set('SESSION.contactEmail',$contactEmail);
+            }else{
+                $f3->set('errors["contactEmailError"]',"please enter a valid email address");
+            }
+
+            //validate driver name
+            if(validName($driverName)){
+                $f3->set('SESSION.driverName',$driverName);
+            }else{
+                $f3->set('errors["driverNameError"]',"please enter a valid contact last name");
+            }
+            //---------------MORE VALIDATION GOES HERE-------------------------------//
 
 
 
