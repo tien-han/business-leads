@@ -40,3 +40,18 @@
 
         return preg_match($pattern, $password);
     }
+//-------------------MAIN FORM VALIDATION--------------------------------//
+function validName($name){
+    return (ctype_alpha($name) && strlen($name) >= 2);
+}
+//needs work :'(
+function validAddress($address){
+        if(!empty($address)) {
+            $check_pattern = '/\d+ [0-9a-zA-Z ]+/';
+            return !preg_match($check_pattern, $address);
+        }
+        return false;
+}
+function validPhone($phone){
+   return strlen($phone)===10 && is_numeric($phone);
+}

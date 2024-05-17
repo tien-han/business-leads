@@ -44,18 +44,37 @@
             <!--Business Name-->
             <label for="businessName" class="form-label mt-3"><b>Business Name</b></label>
             <input class="form-control" type="text" name="businessName" id="businessName">
+            <check if="{{ isset(@errors['businessNameError']) }}">
+                <span class="err">{{ @errors['businessNameError']}}</span>
+            </check>
+            <br>
             <!--Business Address-->
             <label for="businessAddress" class="form-label mt-3"><b>Business Address</b></label>
             <input class="form-control" type="text" name="businessAddress" id="businessAddress">
             <!--Contact First Name-->
             <label for="firstName" class="form-label mt-3"><b>Contact First Name</b></label>
             <input class="form-control" type="text" name="firstName" id="firstName">
+            <br>
+            <check if="{{ isset(@errors['contactNameError']) }}">
+                <span class="err">{{ @errors['contactNameError']}}</span>
+            </check>
+            <br>
             <!--Contact Last Name-->
             <label for="lastName" class="form-label mt-3"><b>Contact Last Name</b></label>
             <input class="form-control" type="text" name="lastName" id="lastName">
+            <br>
+            <check if="{{ isset(@errors['contactLastNameError']) }}">
+                <span class="err">{{ @errors['contactLastNameError']}}</span>
+            </check>
+            <br>
             <!--Business Phone Number-->
             <label for="phoneNum" class="form-label mt-3"><b>Business Phone Number</b></label>
             <input class="form-control" type="text" name="phoneNum" id="phoneNum">
+            <br>
+            <check if="{{ isset(@errors['businessPhoneError']) }}">
+                <span class="err">{{ @errors['businessPhoneError']}}</span>
+            </check>
+            <br>
             <!--Contact Email-->
             <label for="email" class="form-label mt-3"><b>Contact Email</b></label>
             <input class="form-control" type="text" name="email" id="email">

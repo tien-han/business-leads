@@ -17,9 +17,10 @@
     //Require the form validation file
     require_once('model/validate.php');
 
+
+
     //Instantiate the F3 Base class (Fat-Free)
     $f3 = Base::instance();
-
     //Define a default route
     $f3-> route('GET /', function() {
         //Render a view page
@@ -112,12 +113,71 @@
     });
 
     //Define the MAIN FORM route
-    $f3-> route('GET|POST /form', function() {
-        //var_dump($_POST);
+    $f3-> route('GET|POST /form', function($f3) {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $businessName = $_POST['businessName'];
+            $businessAddress = $_POST['businessAddress'];
+            $contactName = $_POST['firstName'];
+            $contactLastName = $_POST['lastName'];
+            $businessPhone = $_POST['phoneNum'];
+            $contactEmail = $_POST['email'];
+            $driverName = $_POST['driverName'];
+            $driverID = $_POST['driverID'];
+            $slic = $_POST['slic'];
+
+            //validate name
+            //all letter and not null
+            if(validName($businessName)){
+                $f3->set('SESSION.businessName',$businessName);
+            }else{
+                $f3->set('errors["businessNameError"]',"please enter a valid name");
+            }
+            //validate address
+
+            //validate contact name
+            if(validName($contactName)){
+                $f3->set('SESSION.contactName',$contactName);
+            }else{
+                $f3->set('errors["contactNameError"]',"please enter a valid contact name");
+            }
+
+            //validate contact lastname
+            if(validName($contactLastName)){
+                $f3->set('SESSION.contactLastName',$contactLastName);
+            }else{
+                $f3->set('errors["contactLastNameError"]',"please enter a valid contact last name");
+            }
+
+            //validate phone number
+            if(validPhone($businessPhone)){
+                $f3->set('SESSION.businessPhone',$businessPhone);
+            }else{
+                $f3->set('errors["businessPhoneError"]',"please enter a valid phone number");
+            }
+
+
+
+
+            //check errors[]
+            if (empty($f3->get('errors'))) {
+                $f3->reroute('formSummary');
+            }
+        }
+
+
+        //route to summary page if complete and valid
+
         //Render a view page
         $view = new Template();
         echo $view->render('views/form.html');
     });
+
+//Define the form summary route
+$f3-> route('GET /formSummary', function() {
+    //Render a view page
+    $view = new Template();
+    echo $view->render('views/formSummary.html');
+});
 
 //Define the dashboard route
 $f3-> route('GET /dashboard', function() {
