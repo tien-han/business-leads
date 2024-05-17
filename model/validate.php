@@ -41,6 +41,8 @@
         return preg_match($pattern, $password);
     }
 //-------------------MAIN FORM VALIDATION--------------------------------//
+//checks that the name contains all letters
+//and is greater than or equal to 2 letters
 function validName($name){
     return (ctype_alpha($name) && strlen($name) >= 2);
 }
@@ -52,6 +54,8 @@ function validAddress($address){
         }
         return false;
 }
+//checks if the phone number is greater than 10
+//digits and contains all numbers
 function validPhone($phone){
    return strlen($phone)===10 && is_numeric($phone);
 }
