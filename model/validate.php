@@ -1,7 +1,7 @@
 <?php
     /*
      * @author Tien Han
-     * @date 5/8/2024
+     * @date 5/17/2024
      * @description Validation for form responses.
      */
 
@@ -11,7 +11,7 @@
 
     //------------------------ Form Validation Methods ------------------------//
     //Check to see that an email address is valid for logging in
-    function validEmail($email): bool {
+    function validateEmail($email): bool {
         //Remove all illegal characters from email and see if it's a valid email
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $isEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -26,4 +26,17 @@
         }
 
         return $isEmail AND $isUPS;
+    }
+
+    //Check to see that a password is valid for logging in
+    function validatePassword($password): bool {
+        //Regex to check that the password has at least:
+        //    - An uppercase
+        //    - A lowercase
+        //    - A numerical value
+        //    - A special character
+        //    - 8 characters long
+        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
+
+        return preg_match($pattern, $password);
     }

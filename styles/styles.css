@@ -9,7 +9,10 @@
 
 
 /* --------------------------------Global Styles--------------------------------- */
-
+/*All Bootstrap tooltips will be affected by this*/
+.tooltip-inner {
+    text-align: left;
+}
 
 /* ------------------------------Navbar Styling------------------------------ */
 .navbar {

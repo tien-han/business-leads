@@ -65,7 +65,7 @@
             //Perform validation on the submitted username (email)
             $emailError = '';
             if (!empty($email)) {
-                if (!validEmail($email)) {
+                if (!validateEmail($email)) {
                     $allValid = false;
                     $emailError = 'Please enter in a valid UPS email!';
                 }
@@ -77,13 +77,24 @@
             $f3->set('SESSION.email', $email);
             $f3->set('SESSION.emailError', $emailError);
 
-            //TODO: Add in password validation
+            //Perform validation on the submitted password
+            $passwordError = '';
+            if (!empty($password)) {
+                if (!validatePassword($password)) {
+                    $allValid = false;
+                    $passwordError = 'Please enter in a valid password!';
+                }
+            } else {
+                //Password is required
+                $allValid = false;
+                $passwordError = 'Please enter your password.';
+            }
+            $f3->set('SESSION.passwordError', $passwordError);
 
-            //TODO: Redirect once we have the page
             //Redirect to the application dashboard
-            //if ($allValid) {
-            //    $f3->reroute("application-form/experience");
-            //}
+            if ($allValid) {
+                $f3->reroute("dashboard");
+            }
         }
 
         //Render a view page
