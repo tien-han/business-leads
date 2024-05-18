@@ -109,6 +109,7 @@
     $f3-> route('GET|POST /sign-up', function() {
         //var_dump($_POST);
         // TODO: add in validations
+        //if all validation passed reroute to dashboard
         //Render a view page
         $view = new Template();
         echo $view->render('views/sign-up.html');
@@ -129,6 +130,7 @@
 
             //construct new lead object
             //add it to the session
+            //with all unknown values until they pass validation
             $f3->set("SESSION.lead", new Lead());
             //set each variable to an object field
 
@@ -143,49 +145,49 @@
 
             //validate contact name
             if(validName($contactName)){
-                $f3->set('SESSION.contactName',$contactName);
+                $f3->get('SESSION.lead')->setContactName($contactName);
             }else{
                 $f3->set('errors["contactNameError"]',"please enter a valid contact name");
             }
 
             //validate contact lastname
             if(validName($contactLastName)){
-                $f3->set('SESSION.contactLastName',$contactLastName);
+                $f3->get('SESSION.lead')->setContactLastName($contactLastName);
             }else{
                 $f3->set('errors["contactLastNameError"]',"please enter a valid contact last name");
             }
 
             //validate phone number
             if(validPhone($businessPhone)){
-                $f3->set('SESSION.businessPhone',$businessPhone);
+                $f3->get('SESSION.lead')->setBusinessPhone($businessPhone);
             }else{
                 $f3->set('errors["businessPhoneError"]',"please enter a valid phone number");
             }
 
             //validate email
             if(validEmail($contactEmail)){
-                $f3->set('SESSION.contactEmail',$contactEmail);
+                $f3->get('SESSION.lead')->setContactEmail($contactEmail);
             }else{
                 $f3->set('errors["contactEmailError"]',"please enter a valid email address");
             }
 
             //validate driver name
             if(validName($driverName)){
-                $f3->set('SESSION.driverName',$driverName);
+                $f3->get('SESSION.lead')->setDriverName($driverName);
             }else{
                 $f3->set('errors["driverNameError"]',"please enter a valid contact last name");
             }
 
             //validate employee ID
             if(validEmployeeID($driverID)){
-                $f3->set('SESSION.driverID',$driverID);
+                $f3->get('SESSION.lead')->setDriverID($driverID);
             }else{
                 $f3->set('errors["driverIDError"]',"please enter a valid employee ID");
             }
 
             //validate slic
             if(validSlic($slic)){
-                $f3->set('SESSION.slic',$slic);
+                $f3->get('SESSION.lead')->setSlic($slic);
             }else{
                 $f3->set('errors["slicError"]',"please enter a slic in the North West Division");
             }

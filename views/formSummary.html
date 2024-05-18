@@ -9,7 +9,7 @@
 </head>
 <body>
 <div>
-    <h1>Thank you for submitting a business lead, {{ @SESSION.driverName}}({{ @SESSION.driverID}}) </h1>
+    <h1>Thank you for submitting a business lead, {{ @SESSION.lead->getDriverName()}}({{ @SESSION.lead->getDriverID()}}) </h1>
     <h4>Your center manager has been notified</h4>
 
     <table>
@@ -20,22 +20,27 @@
         </tr>
         <tr>
             <td>
-                Contact first name: {{ @SESSION.contactName}}
+                Business Phone: {{ @SESSION.lead->getBusinessPhone()}}
             </td>
         </tr>
         <tr>
             <td>
-                Contact last name: {{ @SESSION.contactLastName}}
+                Contact first name: {{ @SESSION.lead->getContactName()}}
             </td>
         </tr>
         <tr>
             <td>
-                Contact email: {{ @SESSION.contactEmail}}
+                Contact last name: {{ @SESSION.lead->getContactLastName()}}
             </td>
         </tr>
         <tr>
             <td>
-                SLIC: {{ @SESSION.slic}}
+                Contact email: {{ @SESSION.lead->getContactEmail()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                SLIC: {{ @SESSION.lead->getSlic()}}
             </td>
         </tr>
     </table>
