@@ -16,6 +16,8 @@
 
     //Require the form validation file
     require_once('model/validate.php');
+    //need to update composer with /classes
+    require_once('classes/lead.php');
 
 
 
@@ -125,10 +127,15 @@
             $driverID = $_POST['driverID'];
             $slic = $_POST['slic'];
 
+            //construct new lead object
+            //add it to the session
+            $f3->set("SESSION.lead", new Lead());
+            //set each variable to an object field
+
             //validate name
             //all letter and not null
             if(validName($businessName)){
-                $f3->set('SESSION.businessName',$businessName);
+                $f3->get('SESSION.lead')->setBusinessName($businessName);
             }else{
                 $f3->set('errors["businessNameError"]',"please enter a valid name");
             }
@@ -168,12 +175,25 @@
             }else{
                 $f3->set('errors["driverNameError"]',"please enter a valid contact last name");
             }
-            //---------------MORE VALIDATION GOES HERE-------------------------------//
 
+            //validate employee ID
+            if(validEmployeeID($driverID)){
+                $f3->set('SESSION.driverID',$driverID);
+            }else{
+                $f3->set('errors["driverIDError"]',"please enter a valid employee ID");
+            }
 
+            //validate slic
+            if(validSlic($slic)){
+                $f3->set('SESSION.slic',$slic);
+            }else{
+                $f3->set('errors["slicError"]',"please enter a slic in the North West Division");
+            }
 
             //check errors[]
             if (empty($f3->get('errors'))) {
+                //add lead object to DB
+                //email lead object to perspective center manager
                 $f3->reroute('formSummary');
             }
         }

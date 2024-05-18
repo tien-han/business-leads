@@ -64,3 +64,13 @@ function validPhone($phone){
 function validEmail($email){
         return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
+//check that the employee ID is all numeric
+//and a length of 7 digits
+function validEmployeeID($ID){
+        return strlen($ID)===7 && is_numeric($ID);
+}
+//check that the slic is 4 digits long
+//and only contains numbers
+function validSlic($slic){
+        return strlen($slic)===4 && is_numeric($slic);
+}

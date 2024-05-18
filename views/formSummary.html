@@ -8,12 +8,38 @@
     <title>Document</title>
 </head>
 <body>
-<h1>FORM SUMMARY PAGE!</h1>
-<p> {{ @SESSION.businessName}}</p>
-<p> {{ @SESSION.contactName}}</p>
-<p> {{ @SESSION.contactLastName}}</p>
-<p> {{ @SESSION.businessPhone}}</p>
-<p> {{ @SESSION.contactEmail}}</p>
-<p> {{ @SESSION.driverName}}</p>
+<div>
+    <h1>Thank you for submitting a business lead, {{ @SESSION.driverName}}({{ @SESSION.driverID}}) </h1>
+    <h4>Your center manager has been notified</h4>
+
+    <table>
+        <tr>
+            <td>
+                Business name: {{ @SESSION.lead->getBusinessName()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contact first name: {{ @SESSION.contactName}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contact last name: {{ @SESSION.contactLastName}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contact email: {{ @SESSION.contactEmail}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                SLIC: {{ @SESSION.slic}}
+            </td>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>

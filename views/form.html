@@ -94,6 +94,11 @@
             <!--Driver Employee ID-->
             <label for="driverID" class="form-label mt-3"><b>Driver Employee ID</b></label>
             <input class="form-control" type="text" name="driverID" id="driverID">
+            <br>
+            <check if="{{ isset(@errors['driverIDError']) }}">
+                <span class="err">{{ @errors['driverIDError']}}</span>
+            </check>
+            <br>
             <!--SLIC-->
             <label for="slic" class="form-label mt-3"><b>SLIC</b></label>
             <select class="form-select" id="slic" name="slic">
@@ -114,6 +119,11 @@
                 <option value="9876">9876 - PACIFIC</option>
                 <option value="9910">9910 - PULLMAN</option>
             </select>
+            <br>
+            <check if="{{ isset(@errors['slicError']) }}">
+                <span class="err">{{ @errors['slicError']}}</span>
+            </check>
+            <br>
             <!--Button for Form Submission-->
             <div class="d-flex justify-content-center">
                 <button class="btn btn-primary mt-3" type="submit">Submit</button>
