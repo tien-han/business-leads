@@ -24,10 +24,10 @@
                 </a>
             </li>
         </ul>
-        <a class="ms-auto me-3 nav-link" type="text/html" href="dashboard">Logout</a>
+        <a class="ms-auto me-3 nav-link" type="text/html" href="{{ @BASE }}">Logout</a>
     </div>
 </nav>
-<p>Main dashboard page</p>
+<p>Welcome, {{ @SESSION.user->getFirstName()}} </p>
 <div class="container">
     <div class="row">
         <div class="col-8 border border-dark">

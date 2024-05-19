@@ -18,6 +18,7 @@
     require_once('model/validate.php');
     //need to update composer with /classes
     require_once('classes/lead.php');
+    require_once('classes/user.php');
 
 
 
@@ -106,9 +107,63 @@
     });
 
     // define the signup route
-    $f3-> route('GET|POST /sign-up', function() {
+    $f3-> route('GET|POST /sign-up', function($f3) {
         //var_dump($_POST);
         // TODO: add in validations
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $email = $_POST['email'];
+            $slic = $_POST['slic'];
+            $role = $_POST['role'];
+            $password = $_POST['password'];
+
+            //construct new user object
+            $f3->set("SESSION.user", new User());
+
+            //validate first name
+            if(validName($firstName)){
+                $f3->get('SESSION.user')->setFirstName($firstName);
+            }else{
+                $f3->set('errors["firstNameSignUpError"]',"please enter a valid first name");
+            }
+            //validate last name
+            if(validName($lastName)){
+                $f3->get('SESSION.user')->setLastName($lastName);
+            }else{
+                $f3->set('errors["lastNameSignUpError"]',"please enter a valid last name");
+            }
+            //validate UPS email
+            if(validateEmail($email)){
+                $f3->get('SESSION.user')->setEmail($email);
+            }else{
+                $f3->set('errors["emailSignUpError"]',"please enter a valid UPS email");
+            }
+            //validate slic
+            if(validSlic($slic)){
+                $f3->get('SESSION.user')->setSlic($slic);
+            }else{
+                $f3->set('errors["slicSignUpError"]',"please enter a valid SLIC");
+            }
+            //role
+            if(validRole($role)){
+                $f3->get('SESSION.user')->setRole($role);
+            }else{
+                $f3->set('errors["roleSignUpError"]',"please enter a valid role");
+            }
+            //password
+            if(validatePassword($password)){
+                $f3->get('SESSION.user')->setPassword($password);
+            }else{
+                $f3->set('errors["passwordSignUpError"]',"please enter a valid password");
+            }
+            //check errors[]
+            if (empty($f3->get('errors'))) {
+                //add lead object to DB
+                //email lead object to perspective center manager
+                $f3->reroute("dashboard");
+            }
+        }
         //if all validation passed reroute to dashboard
         //Render a view page
         $view = new Template();

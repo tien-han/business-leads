@@ -74,3 +74,7 @@ function validEmployeeID($ID){
 function validSlic($slic){
         return strlen($slic)===4 && is_numeric($slic);
 }
+//-------------------SIGN UP FORM VALIDATION--------------------------------//
+function validRole($role){
+        return ($role === "CM" || $role == "BD" || $role == "DM");
+}
