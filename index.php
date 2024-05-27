@@ -159,8 +159,7 @@
             }
             //check errors[]
             if (empty($f3->get('errors'))) {
-                //add lead object to DB
-                //email lead object to perspective center manager
+               //send email to DM to approve sign up request and add to DB
                 $f3->reroute("dashboard");
             }
         }
