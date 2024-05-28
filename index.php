@@ -202,6 +202,32 @@
 
 $f3-> route('GET|POST /approval', function() {
     //Render a view page
+    //connect to db
+    require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+    try {
+        $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        echo 'connected to database!';
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+
+    $sql = "SELECT * FROM users WHERE account_activated = 0";
+
+//prepare the statement
+    $statement = $dbh->prepare($sql);
+
+//execute the statement
+    $statement->execute();
+
+//process
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    echo "<h1>Approve Requests</h1>";
+    echo "<ol>";
+    foreach($result as $row){
+        echo "<li>".$row['last_name']. ", ".$row['first_name']."-".$row['']."</li>";
+    }
+    echo "</ol>";
     $view = new Template();
     echo $view->render('views/approval.html');
 });
