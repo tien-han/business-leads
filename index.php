@@ -20,7 +20,7 @@
     require_once('classes/lead.php');
     require_once('classes/user.php');
 
-
+    $obj="";
 
     //Instantiate the F3 Base class (Fat-Free)
     $f3 = Base::instance();
@@ -119,7 +119,7 @@
             $password = $_POST['password'];
 
             //construct new user object
-            $f3->set("SESSION.user", new User());
+            $f3->set('SESSION.user', new User());
 
             //validate first name
             if(validName($firstName)){
@@ -159,8 +159,41 @@
             }
             //check errors[]
             if (empty($f3->get('errors'))) {
-               //send email to DM to approve sign up request and add to DB
-                $f3->reroute("dashboard");
+                //send email to DM to approve sign up request and add to DB
+                $status = 0;
+                $date = date('Y-m-d h:i:s', time());
+                $subject = "New User: " .$f3->get('SESSION.user')->getFirstName();
+                $to = "garrett.ballreich101@gmail.com";
+                //msg sould be a link to appove the request
+                require $_SERVER['DOCUMENT_ROOT'].'/../config.php';
+
+                try {
+                    $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                    echo 'connected to database!';
+                }
+                catch (PDOException $e){
+                    die( $e->getMessage() );
+                }
+                //first
+
+                $sql = 'INSERT INTO users (first_name, last_name, email, password, account_activated, role, created_at) 
+                VALUES(:First, :Last, :Email, :Password, :AccountActivated, :Role, :CreatedAt)';
+
+                $statement = $dbh->prepare($sql);
+                $statement->bindParam(':First', $firstName);
+                $statement->bindParam(':Last', $lastName);
+                $statement->bindParam(':Email', $email);
+                $statement->bindParam(':Password', $password);
+                $statement->bindParam(':AccountActivated', $status);
+                $statement->bindParam(':Role', $role);
+                $statement->bindParam(':CreatedAt', $date );
+
+                $statement->execute();
+
+                //$id = $dbh->lastInsertId();
+                $msg = "https://garrettballreich.greenriverdev.com/328/business-leads/approval";
+                mail($to, $subject, $msg);
+                //$f3->reroute("dashboard");
             }
         }
         //if all validation passed reroute to dashboard
@@ -168,6 +201,15 @@
         $view = new Template();
         echo $view->render('views/sign-up.html');
     });
+
+//Define the approval route
+$f3-> route('GET /approval', function($f3) {
+
+
+    //Render a view page
+    $view = new Template();
+    echo $view->render('views/approval.html');
+});
 
     //Define the MAIN FORM route
     $f3-> route('GET|POST /form', function($f3) {
