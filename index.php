@@ -162,7 +162,7 @@
                 //send email to DM to approve sign up request and add to DB
                 $status = 0;
                 $date = date('Y-m-d h:i:s', time());
-                $subject = "New User: " . $f3->get('SESSION.user')->getFirstName();
+                $subject = "Access Requested From: " . $f3->get('SESSION.user')->getFirstName()." ". $f3->get('SESSION.user')->getLastName();
                 $to = "garrett.ballreich101@gmail.com";
                 //msg sould be a link to appove the request
                 require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
