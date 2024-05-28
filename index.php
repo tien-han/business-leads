@@ -110,7 +110,7 @@
     $f3-> route('GET|POST /sign-up', function($f3) {
         //var_dump($_POST);
         // TODO: add in validations
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $email = $_POST['email'];
@@ -122,57 +122,56 @@
             $f3->set('SESSION.user', new User());
 
             //validate first name
-            if(validName($firstName)){
+            if (validName($firstName)) {
                 $f3->get('SESSION.user')->setFirstName($firstName);
-            }else{
-                $f3->set('errors["firstNameSignUpError"]',"please enter a valid first name");
+            } else {
+                $f3->set('errors["firstNameSignUpError"]', "please enter a valid first name");
             }
             //validate last name
-            if(validName($lastName)){
+            if (validName($lastName)) {
                 $f3->get('SESSION.user')->setLastName($lastName);
-            }else{
-                $f3->set('errors["lastNameSignUpError"]',"please enter a valid last name");
+            } else {
+                $f3->set('errors["lastNameSignUpError"]', "please enter a valid last name");
             }
             //validate UPS email
-            if(validateEmail($email)){
+            if (validateEmail($email)) {
                 $f3->get('SESSION.user')->setEmail($email);
-            }else{
-                $f3->set('errors["emailSignUpError"]',"please enter a valid UPS email");
+            } else {
+                $f3->set('errors["emailSignUpError"]', "please enter a valid UPS email");
             }
             //validate slic
-            if(validSlic($slic)){
+            if (validSlic($slic)) {
                 $f3->get('SESSION.user')->setSlic($slic);
-            }else{
-                $f3->set('errors["slicSignUpError"]',"please enter a valid SLIC");
+            } else {
+                $f3->set('errors["slicSignUpError"]', "please enter a valid SLIC");
             }
             //role
-            if(validRole($role)){
+            if (validRole($role)) {
                 $f3->get('SESSION.user')->setRole($role);
-            }else{
-                $f3->set('errors["roleSignUpError"]',"please enter a valid role");
+            } else {
+                $f3->set('errors["roleSignUpError"]', "please enter a valid role");
             }
             //password
-            if(validatePassword($password)){
+            if (validatePassword($password)) {
                 $f3->get('SESSION.user')->setPassword($password);
-            }else{
-                $f3->set('errors["passwordSignUpError"]',"please enter a valid password");
+            } else {
+                $f3->set('errors["passwordSignUpError"]', "please enter a valid password");
             }
             //check errors[]
             if (empty($f3->get('errors'))) {
                 //send email to DM to approve sign up request and add to DB
                 $status = 0;
                 $date = date('Y-m-d h:i:s', time());
-                $subject = "New User: " .$f3->get('SESSION.user')->getFirstName();
+                $subject = "New User: " . $f3->get('SESSION.user')->getFirstName();
                 $to = "garrett.ballreich101@gmail.com";
                 //msg sould be a link to appove the request
-                require $_SERVER['DOCUMENT_ROOT'].'/../config.php';
+                require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
 
                 try {
                     $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
                     echo 'connected to database!';
-                }
-                catch (PDOException $e){
-                    die( $e->getMessage() );
+                } catch (PDOException $e) {
+                    die($e->getMessage());
                 }
                 //first
 
@@ -186,26 +185,22 @@
                 $statement->bindParam(':Password', $password);
                 $statement->bindParam(':AccountActivated', $status);
                 $statement->bindParam(':Role', $role);
-                $statement->bindParam(':CreatedAt', $date );
+                $statement->bindParam(':CreatedAt', $date);
 
                 $statement->execute();
 
                 //$id = $dbh->lastInsertId();
                 $msg = "https://garrettballreich.greenriverdev.com/328/business-leads/approval";
                 mail($to, $subject, $msg);
-                //$f3->reroute("dashboard");
+                $f3->reroute("dashboard");
             }
         }
-        //if all validation passed reroute to dashboard
-        //Render a view page
         $view = new Template();
         echo $view->render('views/sign-up.html');
     });
 
-//Define the approval route
-$f3-> route('GET /approval', function($f3) {
 
-
+$f3-> route('GET|POST /approval', function() {
     //Render a view page
     $view = new Template();
     echo $view->render('views/approval.html');
