@@ -120,6 +120,42 @@ class Controller
     }
 
     function passwordReset() : void {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Get submitted form data
+            $email = $_POST['email'];
+
+            // Validate the email before attempting recovery email
+            if (!empty($email)) {
+                if (!validateUPSEmail($email)) {
+                    // add the error to the errors array
+                    $this->_f3->set('errors["email"]', 'Please enter a valid UPS email!');
+                }
+                if (empty($this->_f3->get('errors'))) {
+                    // if the email is valid, initiate the database lookup
+                    require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+                    try {
+                        $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                        echo 'connected to database!';
+                    } catch (PDOException $e) {
+                        die($e->getMessage());
+                    }
+
+                    // prep the statement
+                    $sql = "SELECT * FROM users WHERE email = :email";
+                    $statement = $dbh->prepare($sql);
+
+                    // bind the parameters
+                    $statement->bindParam(":email", $email);
+                    $statement->execute();
+
+                    // process the results of the query to make sure the email exists
+                    $row = $statement->fetch(PDO::FETCH_ASSOC);
+                    echo $row['email'];
+
+                }
+            }
+        }
         $view = new Template();
         echo $view->render('views/password-reset.html');
     }

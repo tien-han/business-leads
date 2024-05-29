@@ -98,14 +98,13 @@ $f3-> route('GET|POST /login', function($f3) {
 });
 
 // send user to the password-reset page
-$f3->route('GET /password-reset', function() {
+$f3->route('GET|POST /password-reset', function() {
     $GLOBALS['controller']->passwordReset();
 });
 
 // define the signup route
 $f3-> route('GET|POST /sign-up', function($f3) {
     //var_dump($_POST);
-    // TODO: add in validations
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
