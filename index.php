@@ -97,6 +97,11 @@ $f3-> route('GET|POST /login', function($f3) {
     echo $view->render('views/login.html');
 });
 
+// send user to the password-reset page
+$f3->route('GET /password-reset', function() {
+    $GLOBALS['controller']->passwordReset();
+});
+
 // define the signup route
 $f3-> route('GET|POST /sign-up', function($f3) {
     //var_dump($_POST);

@@ -118,4 +118,9 @@ class Controller
         echo $view->render('views/contact.html');
         session_destroy();
     }
+
+    function passwordReset() : void {
+        $view = new Template();
+        echo $view->render('views/password-reset.html');
+    }
 }
