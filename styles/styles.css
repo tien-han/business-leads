@@ -1,20 +1,26 @@
 /*
  * Custom styles for the Business leads application
- * @author Garrett Ballreich, Sage Markwardt, Tien Han
- * @date 5/10/2024
+ *
+ * @author  Garrett Ballreich, Sage Markwardt, Tien Han
+ * @date    5/29/2024
  * @version 1.0
  */
 
-/* ------------------------------Style Dependencies------------------------------ */
+/*------------------------------Style Dependencies------------------------------*/
 
 
-/* --------------------------------Global Styles--------------------------------- */
+/*--------------------------------Global Styles---------------------------------*/
 /*All Bootstrap tooltips will be affected by this*/
 .tooltip-inner {
     text-align: left;
 }
 
-/* ------------------------------Navbar Styling------------------------------ */
+/*Font used by UPS, applied to entire project*/
+html {
+    font-family: "UPSRoboto",Tahoma,helvetica,arial,sans-serif;
+}
+
+/* ------------------------------Navbar Styles------------------------------ */
 .navbar {
     background-color: #f2f1ef;
 }
@@ -90,16 +96,19 @@
     margin-left: 0;
 }
 
-/*----------------- Styles for dashboard ----------------*/
+/*-----------------Dashboard Styles----------------*/
 .followup{
     margin-left: 2%;
 }
+
 .table{
     width: 100%;
 }
+
 .width{
     width: 100%;
 }
+
 .footer{
     background-color: #330000;
     width:100%;
@@ -107,6 +116,7 @@
     height: 125px;
     margin-top: 22%;
 }
+
 .err{
     color: darkred;
 }
