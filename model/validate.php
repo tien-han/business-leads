@@ -1,51 +1,77 @@
 <?php
-    /*
-     * @author Tien Han
-     * @date 5/17/2024
-     * @description Validation for form responses.
-     */
+/**
+ * @description Validation for form responses.
+ * @author Tien Han, Garrett Ballreich
+ * @date 5/29/2024
+ */
 
-    //Turn on error reporting
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+//------------------------ Form Validation Methods ------------------------//
 
-    //------------------------ Form Validation Methods ------------------------//
-    //Check to see that an email address is valid for logging in
-    function validateEmail($email): bool {
-        //Remove all illegal characters from email and see if it's a valid email
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $isEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
-
-        //Validate that the email ends in "ups.com"
-        $upsDomain = 'ups.com';
-        $emailDomain = explode('@', $email, 2);
-        if ($emailDomain[1] == $upsDomain) {
-            $isUPS = true;
-        } else {
-            $isUPS = false;
-        }
-
-        return $isEmail AND $isUPS;
-    }
-
-    //Check to see that a password is valid for logging in
-    function validatePassword($password): bool {
-        //Regex to check that the password has at least:
-        //    - An uppercase
-        //    - A lowercase
-        //    - A numerical value
-        //    - A special character
-        //    - 8 characters long
-        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
-
-        return preg_match($pattern, $password);
-    }
-//-------------------MAIN FORM VALIDATION--------------------------------//
-//checks that the name contains all letters
-//and is greater than or equal to 2 letters
-function validName($name){
+/**
+ * Checks that the given string only contains alphabetic values
+ * and has at least 2 letters.
+ *
+ * @param string $name given string name to validate
+ * @return bool true if name is valid, false if not
+ */
+function validateName($name) : bool
+{
     return (ctype_alpha($name) && strlen($name) >= 2);
 }
+
+/**
+ * Checks that the given email address is valid
+ *
+ * @param string $email given email to validate
+ * @return bool true if email is valid, false if not
+ */
+function validateEmail($email) : bool
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+/**
+ * Checks that the given email address is valid and with UPS
+ *
+ * @param string $email given email to validate
+ * @return bool true if email is valid, false if not
+ */
+function validateUPSEmail($email): bool
+{
+    //Remove all illegal characters from email and see if it's a valid email
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    $isEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+    //Validate that the email ends in "ups.com"
+    $upsDomain = 'ups.com';
+    $emailDomain = explode('@', $email, 2);
+    if ($emailDomain[1] == $upsDomain) {
+        $isUPS = true;
+    } else {
+        $isUPS = false;
+    }
+
+    return $isEmail AND $isUPS;
+}
+
+/**
+ * Checks that the given password is valid when signing up. Criteria as listed:
+ *   At least
+ *     - An uppercase
+ *     - A lowercase
+ *     - A numerical value
+ *     - A special character
+ *     - At 8 characters long
+ *
+ * @param string $password given string password to validate
+ * @return bool true if password is valid, false if not
+ */
+function validatePassword($password): bool
+{
+    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
+    return preg_match($pattern, $password);
+}
+
 //needs work :'(
 function validAddress($address){
         if(!empty($address)) {
@@ -60,10 +86,7 @@ function validPhone($phone){
    return strlen($phone)===10 && is_numeric($phone);
 }
 
-//check for valid email address
-function validEmail($email){
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
+
 //check that the employee ID is all numeric
 //and a length of 7 digits
 function validEmployeeID($ID){
