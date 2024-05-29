@@ -97,12 +97,12 @@ $f3-> route('GET|POST /login', function($f3) {
     echo $view->render('views/login.html');
 });
 
-// send user to the password-reset page
+// send user to the page to request a reset password email
 $f3->route('GET|POST /password-request', function() {
     $GLOBALS['controller']->passwordReset();
 });
 
-// render the view from the reset email link
+// loads the emailed password reset page
 $f3->route('GET|POST /password-email', function() {
     $GLOBALS['controller']->passwordEmail();
 });

@@ -119,7 +119,8 @@ class Controller
         session_destroy();
     }
 
-    function passwordReset() : void {
+    function passwordReset(): void
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Get submitted form data
             $email = $_POST['email'];
@@ -137,8 +138,6 @@ class Controller
 
                     try {
                         $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-                        // TODO: remove the connection echo
-                        echo 'connected to database!';
                     } catch (PDOException $e) {
                         die($e->getMessage());
                     }
@@ -153,20 +152,20 @@ class Controller
 
                     // process the results of the query to make sure the email exists
                     $row = $statement->fetch(PDO::FETCH_ASSOC);
-                    if ($row['email'] == $email){
+                    if ($row['email'] == $email) {
                         // if it matches an email in the database, send the email
                         // start by creating the expiration time in 24 hours (d+1)
                         $expFormat = mktime(
-                            date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y")
+                            date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y")
                         );
                         // put that date into datetime format
-                        $expDate = date("Y-m-d H:i:s",$expFormat);
+                        $expDate = date("Y-m-d H:i:s", $expFormat);
 
                         // create the key using md5 to hash their email + a string
                         // (note this will not work using email and numbers on the same line)
-                        $hashKey = md5($email."hash_this_word");
+                        $hashKey = md5($email . "hash_this_word");
                         // add a random substring to the key as well
-                        $addKey = substr(md5(uniqid(rand(),1)),3,10);
+                        $addKey = substr(md5(uniqid(rand(), 1)), 3, 10);
                         $hashKey = $hashKey . $addKey;
 
                         // now insert this key into the database for later access
@@ -182,11 +181,11 @@ class Controller
 
                         // create the email message with the link to reset the password
                         // TODO: make this work with other links so it's usable for Tien + Garrett
-                        $message = '<p>Dear '. ucfirst($row['first_name']) . ',</p>
+                        $message = '<p>Dear ' . ucfirst($row['first_name']) . ',</p>
                             <p>Please click on the link to reset your password:</p>
                             <br>
-                            <p><a href = "https://www.smarkwardt.greenriverdev.com/328/business-leads/password-request.html?key='.$hashKey.'&email='.$email.'">
-                            https://www.www.smarkwardt.greenriverdev.com/328/business-leads/password-reset.php?key='.$hashKey.'&email='.$email.'</a></p>
+                            <p><a href = "https://www.smarkwardt.greenriverdev.com/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '">
+                            https://www.www.smarkwardt.greenriverdev.com/328/business-leads/password-reset.php?key=' . $hashKey . '&email=' . $email . '</a></p>
                             <br>
                             <p>This link will expire after 24 hours. If you did not request this email, 
                             please let your supervisor know. </p>';
@@ -195,12 +194,12 @@ class Controller
                         $subject = "Password Reset Request";
 
                         // Set headers for HTML email
-                        $headers  = "MIME-Version: 1.0" . "\r\n";
+                        $headers = "MIME-Version: 1.0" . "\r\n";
                         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
                         // Send email
                         $mailSuccess = mail($to, $subject, $message, $headers);
-                        if ($mailSuccess != null){
+                        if ($mailSuccess != null) {
                             // set a message to display letting them know it was sent
                             $this->_f3->set('errors["email"]', 'A reset email has been sent');
                         }
@@ -216,8 +215,59 @@ class Controller
         echo $view->render('views/password-request.html');
     }
 
-    function passwordEmail() {
-        $view = new Template();
-        echo $view->render('views/password-reset.html');
-    }
+    function passwordEmail()
+    {
+        // if the correct items are in the link used to reach this page AND
+        // the page has not been posted (don't allow use of the link twice)
+        if (isset($_GET["key"]) && isset($_GET["email"]) && !isset($_POST["action"])) {
+            // assign variables
+            $hashKey = $_GET["key"];
+            $email = $_GET["email"];
+            // get today's date to check against the expiration
+            $curDate = date("Y-m-d H:i:s");
+            // connect to the database
+            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+            try {
+                $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+
+            // check the database matches - the email and key should be in the same row
+            $sql = "SELECT * FROM `password_reset_temp` WHERE `key`= :key and `email`= :email";
+            $statement = $dbh->prepare($sql);
+
+            // bind the parameters and execute
+            $statement->bindParam(":email", $email);
+            $statement->bindParam(":key", $hashKey);
+            $statement->execute();
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($row == '') {
+                $this->_f3->set('errors["reset"]', 'The link used to access this page is invalid.');
+            }
+
+            // check the date of the code
+            $expDate = $row['expDate'];
+            if ($expDate >= $curDate) {
+                // check if they've tried to set the password
+                if (isset($_POST["email"]) && isset($_POST["action"]) && $_POST['password'] != null) {
+                    $password = $_POST["password"];
+                    $email = $_POST["email"];
+                    $sql = "UPDATE users 
+                        SET password = :password
+                        WHERE email= :email";
+
+                    $statement->bindParam(":password", $password);
+                    $statement->bindParam(":email", $email);
+                    $statement->execute();
+                }
+            } else {
+                $this->_f3->set('errors["reset"]', 'Your code is expired.');
+            }
+        }
+            $view = new Template();
+            echo $view->render('views/password-reset.html');
+        }
+
 }
