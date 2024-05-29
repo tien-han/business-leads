@@ -185,7 +185,7 @@ class Controller
                             <p>Please click on the link to reset your password:</p>
                             <br>
                             <p><a href = "https://www.smarkwardt.greenriverdev.com/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '">
-                            https://www.www.smarkwardt.greenriverdev.com/328/business-leads/password-reset.php?key=' . $hashKey . '&email=' . $email . '</a></p>
+                            https://www.www.smarkwardt.greenriverdev.com/328/business-leads/password-email.php?key=' . $hashKey . '&email=' . $email . '</a></p>
                             <br>
                             <p>This link will expire after 24 hours. If you did not request this email, 
                             please let your supervisor know. </p>';
@@ -219,10 +219,11 @@ class Controller
     {
         // if the correct items are in the link used to reach this page AND
         // the page has not been posted (don't allow use of the link twice)
-        if (isset($_GET["key"]) && isset($_GET["email"]) && !isset($_POST["action"])) {
+        if (isset($_GET["key"]) && isset($_GET["email"])) {
             // assign variables
             $hashKey = $_GET["key"];
             $email = $_GET["email"];
+            echo $email;
             // get today's date to check against the expiration
             $curDate = date("Y-m-d H:i:s");
             // connect to the database
@@ -243,31 +244,36 @@ class Controller
             $statement->bindParam(":key", $hashKey);
             $statement->execute();
             $row = $statement->fetch(PDO::FETCH_ASSOC);
-            if ($row == '') {
-                $this->_f3->set('errors["reset"]', 'The link used to access this page is invalid.');
+            if (!$row) {
+                // if the link is invalid, the page should not load
+                die('The link used to access this page is invalid.');
             }
 
             // check the date of the code
             $expDate = $row['expDate'];
             if ($expDate >= $curDate) {
-                // check if they've tried to set the password
-                if (isset($_POST["email"]) && isset($_POST["action"]) && $_POST['password'] != null) {
-                    $password = $_POST["password"];
-                    $email = $_POST["email"];
-                    $sql = "UPDATE users 
-                        SET password = :password
-                        WHERE email= :email";
-
-                    $statement->bindParam(":password", $password);
-                    $statement->bindParam(":email", $email);
-                    $statement->execute();
+                // check if
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // if the page has posted, set the password
+                        $password = $_POST["password"];
+                        echo $password;
+                        // check if it's a valid password
+                        if (validatePassword($password)) {
+                            $sql = "UPDATE users SET password = :password WHERE email = :email";
+                            $statement = $dbh->prepare($sql);
+                            $statement->bindParam(":password", $password);
+                            $statement->bindParam(":email", $email);
+                            $statement->execute();
+                        } else {
+                            $this->_f3->set('errors["reset"]', "please enter a valid password");
+                        }
+                    }
+                } else {
+                    // if we get here, their code was expired
+                    die("This code is expired");
                 }
-            } else {
-                $this->_f3->set('errors["reset"]', 'Your code is expired.');
             }
-        }
             $view = new Template();
             echo $view->render('views/password-reset.html');
         }
-
 }
