@@ -170,8 +170,8 @@ class Controller
                         $hashKey = $hashKey . $addKey;
 
                         // now insert this key into the database for later access
-                        $sql = 'INSERT INTO password_reset_temp (email, key, expDate)
-                                VALUES (:email, :key, :expDate)';
+                        $sql = "INSERT INTO password_reset_temp (email, `key`, expDate)
+                                VALUES (:email, :key, :expDate)";
                         $statement = $dbh->prepare($sql);
 
                         // bind the parameters and execute
@@ -185,13 +185,12 @@ class Controller
                         $message = '<p>Dear '. ucfirst($row['first_name']) . ',</p>
                             <p>Please click on the link to reset your password:</p>
                             <br>
-                            <p><a href = "https://www.smarkwardt.greenriverdev.com/328/business-leads/password-reset.html?key='.$hashKey.'&email='.$email.'">
+                            <p><a href = "https://www.smarkwardt.greenriverdev.com/328/business-leads/password-request.html?key='.$hashKey.'&email='.$email.'">
                             https://www.www.smarkwardt.greenriverdev.com/328/business-leads/password-reset.php?key='.$hashKey.'&email='.$email.'</a></p>
                             <br>
-                            <p>This link will expire after 24 hours. If you did not request this forgotten password email, 
+                            <p>This link will expire after 24 hours. If you did not request this email, 
                             please let your supervisor know. </p>';
 
-                        // $headers = "From: no-reply@UPSLeads.com" . "\r\n";
                         $to = $email;
                         $subject = "Password Reset Request";
 
@@ -213,6 +212,11 @@ class Controller
                 }
             }
         }
+        $view = new Template();
+        echo $view->render('views/password-request.html');
+    }
+
+    function passwordEmail() {
         $view = new Template();
         echo $view->render('views/password-reset.html');
     }

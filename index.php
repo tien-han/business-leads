@@ -98,8 +98,13 @@ $f3-> route('GET|POST /login', function($f3) {
 });
 
 // send user to the password-reset page
-$f3->route('GET|POST /password-reset', function() {
+$f3->route('GET|POST /password-request', function() {
     $GLOBALS['controller']->passwordReset();
+});
+
+// render the view from the reset email link
+$f3->route('GET|POST /password-email', function() {
+    $GLOBALS['controller']->passwordEmail();
 });
 
 // define the signup route
