@@ -14,9 +14,10 @@
  * @param string $name given string name to validate
  * @return bool true if name is valid, false if not
  */
+//ctype_alpha($name) &&
 function validateName($name) : bool
 {
-    return (ctype_alpha($name) && strlen($name) >= 2);
+    return (strlen($name) >= 2 && preg_match('/^[a-zA-Z ]+$/', $name));
 }
 
 /**
