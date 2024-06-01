@@ -394,6 +394,9 @@ class Controller
                 if (!validatePassword($password)) {
                     $allValid = false;
                     $passwordError = 'Please enter in a valid password!';
+                } else {
+                    //If the password is valid, hash it to save into the database
+                    $password = password_hash($password, PASSWORD_DEFAULT);
                 }
             } else {
                 //Password is required
