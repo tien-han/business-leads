@@ -160,20 +160,6 @@ class Controller
             $this->_f3->set('SESSION.email', $email);
             $this->_f3->set('SESSION.emailError', $emailError);
 
-            //Perform validation on the submitted password
-            $passwordError = '';
-            if (!empty($password)) {
-                if (!validatePassword($password)) {
-                    $allValid = false;
-                    $passwordError = 'Please enter in a valid password!';
-                }
-            } else {
-                //Password is required
-                $allValid = false;
-                $passwordError = 'Please enter your password.';
-            }
-            $this->_f3->set('SESSION.passwordError', $passwordError);
-
             //Redirect to the application dashboard
             if ($allValid) {
                 $this->_f3->reroute("dashboard");
@@ -402,12 +388,19 @@ class Controller
                 $this->_f3->set('errors["roleSignUpError"]', "please enter a valid role");
             }
 
-            //password
-            if (validatePassword($password)) {
-                $this->_f3->get('SESSION.user')->setPassword($password);
+            //Perform validation on the submitted password
+            $passwordError = '';
+            if (!empty($password)) {
+                if (!validatePassword($password)) {
+                    $allValid = false;
+                    $passwordError = 'Please enter in a valid password!';
+                }
             } else {
-                $this->_f3->set('errors["passwordSignUpError"]', "please enter a valid password");
+                //Password is required
+                $allValid = false;
+                $passwordError = 'Please enter your password.';
             }
+            $this->_f3->set('SESSION.passwordError', $passwordError);
 
             //check errors[]
             if (empty($this->_f3->get('errors'))) {
