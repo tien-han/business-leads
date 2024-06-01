@@ -570,6 +570,34 @@ class Controller
             if (empty($this->_f3->get('errors'))) {
                 //add lead object to DB
                 //email lead object to perspective center manager
+                require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+                try {
+                    $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                    echo 'connected to database!';
+                } catch (PDOException $e) {
+                    die($e->getMessage());
+                }
+                //first
+                $date = date('Y-m-d h:i:s', time());
+
+                $sql = 'INSERT INTO leads (name, address, contact_name, contact_phone, contact_email, ups_employee_name,
+                        ups_employee_id, slic, created_at) 
+                VALUES(:Name, :Address, :Contact, :Phone, :Email, :Driver, :DriverID, :Slic, :Created_at)';
+
+                $statement = $dbh->prepare($sql);
+                $statement->bindParam(':Name', $businessName);
+                $statement->bindParam(':Address', $businessAddress);
+                $statement->bindParam(':Contact', $contactName);
+                $statement->bindParam(':Phone', $businessPhone);
+                $statement->bindParam(':Email', $contactEmail);
+                $statement->bindParam(':Driver', $driverName);
+                $statement->bindParam(':DriverID', $driverID);
+                $statement->bindParam(':Slic', $slic);
+                $statement->bindParam(':Created_at', $date);
+
+                $statement->execute();
+
                 $this->_f3->reroute('form-summary');
             }
         }
