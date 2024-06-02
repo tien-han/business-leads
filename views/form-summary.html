@@ -5,14 +5,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/styles.css?v=81">
     <title>Document</title>
 </head>
 <body>
 <div>
     <h1>Thank you for submitting a business lead, {{ @SESSION.lead->getDriverName()}}({{ @SESSION.lead->getDriverID()}}) </h1>
-    <h4>Your center manager has been notified</h4>
+    <h4>Your center manager has been notified!</h4>
 
-    <table>
+    <table class="approval_request ">
         <tr>
             <td>
                 Business name: {{ @SESSION.lead->getBusinessName()}}

@@ -656,7 +656,7 @@ class Controller
         //get the array of results from the db
         //add that array to the hive to process on the html page
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $this->_f3->set('leads["lead"]',$result);
+        $this->_f3->set('lead',$result);
         */
         //Render a view page
         $view = new Template();
