@@ -32,65 +32,18 @@
     <div class="row">
         <div class="col-8 border border-dark">
             <table class="table">
-                <tr>
-                    <td>UPS</td>
-                    <td>550 Andover PK west</td>
-                    <td>555 555 5555</td>
-                    <td>
-                        <button class="btn btn-primary" type="submit">Add follow up</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>REI</td>
-                    <td>330 Andover PK west</td>
-                    <td>444 444 4444</td>
-                    <td>
-                        <button class="btn btn-primary" type="submit">Add follow up</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Bed Bath & Beyond</td>
-                    <td>310 Andover PK west</td>
-                    <td>333 333 3333</td>
-                    <td>
-                        <button class="btn btn-primary" type="submit">Add follow up</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Target</td>
-                    <td>550 Strander BLVD</td>
-                    <td>222 222 2222</td>
-                    <td>
-                        <button class="btn btn-primary" type="submit">Add follow up</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Seattle Chocolates</td>
-                    <td>100 Andover PK W</td>
-                    <td>111 111 1111</td>
-                    <td>
-                        <button class="btn btn-primary" type="submit">Add follow up</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </td>
-                </tr>
+                <check if="{{ @lead }}">
+                    <!-- Iterate over each item in the 'approval' array -->
+                    <repeat group="{{ @lead }}" value="{{ @row }}">
+                        <tr>
+                            <td> {{ @row.name}}</td>
+                            <td> {{ @row.address}}</td>
+                            <td> {{ @row.contact_phone}}</td>
+                            <td><button class="btn btn-primary" type="submit" onclick="sendLead()">Send Lead</button></td>
+                            <td> <button class="btn btn-danger" type="submit" onclick="deleteLead">Delete Lead</button></td>
+                        </tr>
+                    </repeat>
+                </check>
             </table>
         </div>
 

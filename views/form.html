@@ -51,21 +51,6 @@
             <!--Business Address-->
             <label for="businessAddress" class="form-label mt-3"><b>Business Address</b></label>
             <input class="form-control" type="text" name="businessAddress" id="businessAddress">
-            <!--Contact First Name-->
-            <label for="firstName" class="form-label mt-3"><b>Contact First Name</b></label>
-            <input class="form-control" type="text" name="firstName" id="firstName">
-            <br>
-            <check if="{{ isset(@errors['contactNameError']) }}">
-                <span class="err">{{ @errors['contactNameError']}}</span>
-            </check>
-            <br>
-            <!--Contact Last Name-->
-            <label for="lastName" class="form-label mt-3"><b>Contact Last Name</b></label>
-            <input class="form-control" type="text" name="lastName" id="lastName">
-            <br>
-            <check if="{{ isset(@errors['contactLastNameError']) }}">
-                <span class="err">{{ @errors['contactLastNameError']}}</span>
-            </check>
             <br>
             <!--Business Phone Number-->
             <label for="phoneNum" class="form-label mt-3"><b>Business Phone Number</b></label>
@@ -74,7 +59,23 @@
             <check if="{{ isset(@errors['businessPhoneError']) }}">
                 <span class="err">{{ @errors['businessPhoneError']}}</span>
             </check>
+            <hr>
+            <!--Contact First Name-->
+            <label for="firstName" class="form-label mt-3"><b>Contact First Name</b></label>
+            <input class="form-control" type="text" name="firstName" id="firstName">
             <br>
+            <check if="{{ isset(@errors['contactNameError']) }}">
+                <span class="err">{{ @errors['contactNameError']}}</span>
+            </check>
+
+            <!--Contact Last Name-->
+            <label for="lastName" class="form-label mt-3"><b>Contact Last Name</b></label>
+            <input class="form-control" type="text" name="lastName" id="lastName">
+            <br>
+            <check if="{{ isset(@errors['contactLastNameError']) }}">
+                <span class="err">{{ @errors['contactLastNameError']}}</span>
+            </check>
+
             <!--Contact Email-->
             <label for="email" class="form-label mt-3"><b>Contact Email</b></label>
             <input class="form-control" type="text" name="email" id="email">
@@ -82,7 +83,7 @@
             <check if="{{ isset(@errors['contactEmailError']) }}">
                 <span class="err">{{ @errors['contactEmailError']}}</span>
             </check>
-            <br>
+            <hr>
             <!--Driver Name-->
             <label for="driverName" class="form-label mt-3"><b>Driver Name</b></label>
             <input class="form-control" type="text" name="driverName" id="driverName">
@@ -90,7 +91,7 @@
             <check if="{{ isset(@errors['driverNameError']) }}">
                 <span class="err">{{ @errors['driverNameError']}}</span>
             </check>
-            <br>
+
             <!--Driver Employee ID-->
             <label for="driverID" class="form-label mt-3"><b>Driver Employee ID</b></label>
             <input class="form-control" type="text" name="driverID" id="driverID">
@@ -98,7 +99,7 @@
             <check if="{{ isset(@errors['driverIDError']) }}">
                 <span class="err">{{ @errors['driverIDError']}}</span>
             </check>
-            <br>
+
             <!--SLIC-->
             <label for="slic" class="form-label mt-3"><b>SLIC</b></label>
             <select class="form-select" id="slic" name="slic">
