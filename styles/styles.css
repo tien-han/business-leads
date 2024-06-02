@@ -120,3 +120,39 @@ html {
 .err{
     color: darkred;
 }
+/*-------------------Approval requests styles------------------*/
+/* Apply general table styles */
+.approval_request {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0; /* Even spacing around the table */
+    font-size: 18px; /* Adjust the font size as needed */
+}
+
+/* Style table header */
+.approval_request thead th {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style table rows */
+.approval_request tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Style every other row */
+.approval_request tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray */
+}
+
+/* Style table cells */
+.approval_request tbody td {
+    padding: 10px;
+}
+
+/* Optional: Hover effect */
+.approval_request tbody tr:hover {
+    background-color: #ddd; /* Darker gray on hover */
+}
