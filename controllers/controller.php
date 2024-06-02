@@ -643,7 +643,7 @@ class Controller
         } catch (PDOException $e) {
             die($e->getMessage());
         }
-
+        /*
         $sql = "SELECT * FROM leads WHERE slic = '$userSlic'";
 
         //prepare the statement
@@ -657,7 +657,7 @@ class Controller
         //add that array to the hive to process on the html page
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         $this->_f3->set('leads["lead"]',$result);
-
+        */
         //Render a view page
         $view = new Template();
         echo $view->render('views/dashboard.html');
