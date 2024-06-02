@@ -342,6 +342,14 @@ class Controller
      */
     function signUp(): void
     {
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            echo 'connected to database!';
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
@@ -412,19 +420,14 @@ class Controller
                 $date = date('Y-m-d h:i:s', time());
                 $subject = "Access Requested From: " . $this->_f3->get('SESSION.user')->getFirstName()." ". $this->_f3->get('SESSION.user')->getLastName();
                 $to = "garrett.ballreich101@gmail.com";
-                //msg should be a link to approve the request
-                require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-
-                try {
-                    $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-                    echo 'connected to database!';
-                } catch (PDOException $e) {
-                    die($e->getMessage());
-                }
-
+                $headers = array(
+                    'From' => 'webmaster@example.com',
+                    'Reply-To' => 'webmaster@example.com',
+                    'X-Mailer' => 'PHP/' . phpversion()
+                );
                 //First
-                $sql = 'INSERT INTO users (first_name, last_name, email, password, account_activated, role, created_at) 
-                    VALUES(:First, :Last, :Email, :Password, :AccountActivated, :Role, :CreatedAt)';
+                $sql = 'INSERT INTO users ( first_name, last_name, email, password, account_activated, role, created_at) 
+                   VALUES(:First, :Last, :Email, :Password, :AccountActivated, :Role, :CreatedAt)';
 
                 $statement = $dbh->prepare($sql);
                 $statement->bindParam(':First', $firstName);
@@ -434,10 +437,11 @@ class Controller
                 $statement->bindParam(':AccountActivated', $status);
                 $statement->bindParam(':Role', $role);
                 $statement->bindParam(':CreatedAt', $date);
+
                 $statement->execute();
 
                 $msg = "https://garrettballreich.greenriverdev.com/328/business-leads/approval";
-                mail($to, $subject, $msg);
+                mail($to, $subject, $msg, $headers);
 
                 $this->_f3->reroute("dashboard");
             }
@@ -460,7 +464,7 @@ class Controller
 
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            //echo 'connected to database!';
+            echo 'connected to database!';
         } catch (PDOException $e) {
             die($e->getMessage());
         }
@@ -498,6 +502,14 @@ class Controller
      */
     function mainForm(): void
     {
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            echo 'connected to database!';
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $businessName = $_POST['businessName'];
             $businessAddress = $_POST['businessAddress'];

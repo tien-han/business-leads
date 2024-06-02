@@ -34,7 +34,7 @@ class User
     }
     public function getLastName(): string
     {
-        return $this->_firstName;
+        return $this->_lastName;
     }
     //email
     public function setEmail($email): void
