@@ -4,8 +4,8 @@
  * The Controller class defines methods that can be called for routing
  * within the UPS Business Leads project.
  *
- * @author Tien Han <tienthuyhan@gmail.com>
- * @date   6/01/2024
+ * @author Tien Han <tienthuyhan@gmail.com>, Sage Markwardt
+ * @date   6/03/2024
  */
 class Controller
 {
@@ -55,7 +55,7 @@ class Controller
             //Perform validation on the submitted first name
             $firstNameError = '';
             if (!empty($firstName)) {
-                if (!validateName($firstName)) {
+                if (!Validate::validateName($firstName)) {
                     $allValid = false;
                     $firstNameError = 'Please enter in an alphabetic first name!';
                 }
@@ -70,7 +70,7 @@ class Controller
             //Perform validation on the submitted last name
             $lastNameError = '';
             if (!empty($lastName)) {
-                if (!validateName($lastName)) {
+                if (!Validate::validateName($lastName)) {
                     $allValid = false;
                     $lastNameError = 'Please enter in an alphabetic last name!';
                 }
@@ -85,7 +85,7 @@ class Controller
             //Perform validation on the submitted email
             $emailError = '';
             if (!empty($email)) {
-                if (!validateEmail($email)) {
+                if (!Validate::validateEmail($email)) {
                     $allValid = false;
                     $emailError = 'Please enter in a valid email!';
                 }
@@ -148,7 +148,7 @@ class Controller
             //Perform validation on the submitted username (email)
             $emailError = '';
             if (!empty($email)) {
-                if (!validateUPSEmail($email)) {
+                if (!Validate::validateUPSEmail($email)) {
                     $allValid = false;
                     $emailError = 'Please enter in a valid UPS email!';
                 }
@@ -199,7 +199,7 @@ class Controller
             // Validate the email before attempting recovery email
             if (!empty($email)) {
                 //TODO: turn validation on for this page after testing is done
-                /*if (!validateUPSEmail($email)) {
+                /*if (!Validate::validateUPSEmail($email)) {
                     // add the error to the errors array
                     $this->_f3->set('errors["email"]', 'Please enter a valid UPS email!');
                 }*/
@@ -330,7 +330,7 @@ class Controller
                     $password = $_POST["password"];
                     echo $password;
                     // check if it's a valid password
-                    if (validatePassword($password)) {
+                    if (Validate::validatePassword($password)) {
                         $sql = "UPDATE users SET password = :password WHERE email = :email";
                         $statement = $dbh->prepare($sql);
                         $statement->bindParam(":password", $password);
@@ -376,28 +376,28 @@ class Controller
             $this->_f3->set('SESSION.user', new User());
 
             //validate first name
-            if (validateName($firstName)) {
+            if (Validate::validateName($firstName)) {
                 $this->_f3->get('SESSION.user')->setFirstName($firstName);
             } else {
                 $this->_f3->set('errors["firstNameSignUpError"]', "please enter a valid first name");
             }
 
             //validate last name
-            if (validateName($lastName)) {
+            if (Validate::validateName($lastName)) {
                 $this->_f3->get('SESSION.user')->setLastName($lastName);
             } else {
                 $this->_f3->set('errors["lastNameSignUpError"]', "please enter a valid last name");
             }
 
             //validate UPS email
-            if (validateUPSEmail($email)) {
+            if (Validate::validateUPSEmail($email)) {
                 $this->_f3->get('SESSION.user')->setEmail($email);
             } else {
                 $this->_f3->set('errors["emailSignUpError"]', "please enter a valid UPS email");
             }
 
             //validate slic
-            if (validSlic($slic)) {
+            if (Validate::validSlic($slic)) {
                 $this->_f3->get('SESSION.user')->setSlic($slic);
             } else {
                 $this->_f3->set('errors["slicSignUpError"]', "please enter a valid SLIC");
@@ -413,7 +413,7 @@ class Controller
             //Perform validation on the submitted password
             $passwordError = '';
             if (!empty($password)) {
-                if (!validatePassword($password)) {
+                if (!Validate::validatePassword($password)) {
                     $allValid = false;
                     $passwordError = 'Please enter in a valid password!';
                 } else {
@@ -543,56 +543,56 @@ class Controller
 
             //validate name
             //all letter and not null
-            if (validateName($businessName)) {
+            if (Validate::validateName($businessName)) {
                 $this->_f3->get('SESSION.lead')->setBusinessName($businessName);
             } else {
                 $this->_f3->set('errors["businessNameError"]', "please enter a valid name");
             }
 
             //validate contact name
-            if (validateName($contactName)) {
+            if (Validate::validateName($contactName)) {
                 $this->_f3->get('SESSION.lead')->setContactName($contactName);
             } else {
                 $this->_f3->set('errors["contactNameError"]', "please enter a valid contact name");
             }
 
             //validate contact lastname
-            if (validateName($contactLastName)) {
+            if (Validate::validateName($contactLastName)) {
                 $this->_f3->get('SESSION.lead')->setContactLastName($contactLastName);
             } else {
                 $this->_f3->set('errors["contactLastNameError"]', "please enter a valid contact last name");
             }
 
             //validate phone number
-            if (validPhone($businessPhone)) {
+            if (Validate::validPhone($businessPhone)) {
                 $this->_f3->get('SESSION.lead')->setBusinessPhone($businessPhone);
             } else {
                 $this->_f3->set('errors["businessPhoneError"]', "please enter a valid phone number");
             }
 
             //validate email
-            if (validateEmail($contactEmail)) {
+            if (Validate::validateEmail($contactEmail)) {
                 $this->_f3->get('SESSION.lead')->setContactEmail($contactEmail);
             } else {
                 $this->_f3->set('errors["contactEmailError"]', "please enter a valid email address");
             }
 
             //validate driver name
-            if (validateName($driverName)) {
+            if (Validate::validateName($driverName)) {
                 $this->_f3->get('SESSION.lead')->setDriverName($driverName);
             } else {
                 $this->_f3->set('errors["driverNameError"]', "please enter a valid contact last name");
             }
 
             //validate employee ID
-            if (validEmployeeID($driverID)) {
+            if (Validate::validEmployeeID($driverID)) {
                 $this->_f3->get('SESSION.lead')->setDriverID($driverID);
             } else {
                 $this->_f3->set('errors["driverIDError"]', "please enter a valid employee ID");
             }
 
             //validate slic
-            if (validSlic($slic)) {
+            if (Validate::validSlic($slic)) {
                 $this->_f3->get('SESSION.lead')->setSlic($slic);
             } else {
                 $this->_f3->set('errors["slicError"]', "please enter a slic in the North West Division");
