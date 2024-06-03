@@ -240,8 +240,10 @@ class Controller
                         $hashKey = $hashKey . $addKey;
 
                         // now insert this key into the database for later access
+                        // overwrite if there is already a key sent prior to prevent issues
                         $sql = "INSERT INTO password_reset_temp (email, `key`, expDate)
-                                VALUES (:email, :key, :expDate)";
+                                VALUES (:email, :key, :expDate)
+                                ON DUPLICATE KEY UPDATE `key` = :key, expDate = :expDate";
                         $statement = $dbh->prepare($sql);
 
                         // bind the parameters and execute

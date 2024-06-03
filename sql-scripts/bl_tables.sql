@@ -241,9 +241,10 @@ INSERT INTO messages(
 --
 -- Note: This token database is used to reset passwords
 -- Dummy data isn't needed as data will be populated by the "reset password" feature
+-- The email will work as the primary key in order to prevent duplicate requests in the database.
 --
 CREATE TABLE `password_reset_temp` (
-    `email` varchar(250) NOT NULL,
+    `email` varchar(250) PRIMARY KEY NOT NULL,
     `key` varchar(250) NOT NULL,
     `expDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
