@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `users`(
     `first_name` VARCHAR(255) DEFAULT NULL,
     `last_name` VARCHAR(255) DEFAULT NULL,
     `email` VARCHAR(255) DEFAULT NULL,
-    `password` VARCHAR(20) DEFAULT NULL,
+    `password` VARCHAR(255) DEFAULT NULL,
     `account_activated` BOOLEAN DEFAULT FALSE,
     `account_activated_at` DATETIME DEFAULT NULL,
     `role` VARCHAR(255) DEFAULT NULL,
