@@ -45,6 +45,7 @@ INSERT INTO `users`(
     `first_name`,
     `last_name`,
     `email`,
+    `password`,
     `account_activated`,
     `role`
 )
@@ -52,18 +53,21 @@ VALUES (
     'Annie',
     'Appletree',
     'annie@ups.com',
+    'admin',
     true,
     'Center Manager'
 ), (
     'Miedrail',
     'Pelilde',
     'm.pelilde@ups.com',
+    'admin',
     false,
     'Division Manager'
 ), (
     'admin',
     'admin',
-    'admin.ups.com',
+    'admin@ups.com',
+    PASSWORD('admin'),
     true,
     'Division Manager'
 );

@@ -1,4 +1,10 @@
 <?php
+/**
+ * The User class defines a User and methods to get/set user details.
+ *
+ * @author Garrett Ballreich, Tien Han <tienthuyhan@gmail.com>
+ * @date   6/3/2024
+ */
 class User
 {
     private $_firstName;
@@ -8,14 +14,15 @@ class User
     private $_role;
     private $_password;
 
-    public function __construct()
+    public function __construct($firstName="unknown", $lastName="unknown", $email="unknown",
+                                $slic="unknown", $role="unknown", $password="unknown")
     {
-        $this->_firstName = "unknown";
-        $this->_lastName = "unknown";
-        $this->_email = "unknown";
-        $this->_slic = "unknown";
-        $this->_role = "unknown";
-        $this->_password = "unknown";
+        $this->_firstName = $firstName;
+        $this->_lastName = $lastName;
+        $this->_email = $email;
+        $this->_slic = $slic;
+        $this->_role = $role;
+        $this->_password = $password;
     }
     //setters and getters
     //first name

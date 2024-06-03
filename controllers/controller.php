@@ -160,8 +160,22 @@ class Controller
             $this->_f3->set('SESSION.email', $email);
             $this->_f3->set('SESSION.emailError', $emailError);
 
+            //Check password against what's in the database
+            if (!DataLayer::passwordMatches($email, $password)) {
+                $allValid = false;
+            };
+
             //Redirect to the application dashboard
             if ($allValid) {
+                //Save the user data into the hive for the session
+                $userDetails = DataLayer::getUser($email);
+                $user = new User($userDetails['first_name'],
+                                $userDetails['last_name'],
+                                $userDetails['email'],
+                                9701, //Make sure to remove this hardcoded slic #
+                                $userDetails['role']);
+                $this->_f3->set('SESSION.user', $user);
+
                 $this->_f3->reroute("dashboard");
             }
         }
