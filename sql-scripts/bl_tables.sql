@@ -60,6 +60,12 @@ VALUES (
     'm.pelilde@ups.com',
     false,
     'Division Manager'
+), (
+    'admin',
+    'admin',
+    'admin.ups.com',
+    true,
+    'Division Manager'
 );
 
 -- --------------------------------------------------------
@@ -176,11 +182,11 @@ INSERT INTO `leads`(
 VALUES (
     'Google',
     9701,
-    2
+    3
 ), (
     'Daiso',
     9782,
-    1
+    3
 );
 
 -- --------------------------------------------------------
