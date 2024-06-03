@@ -20,6 +20,11 @@ html {
     font-family: "UPSRoboto",Tahoma,helvetica,arial,sans-serif;
 }
 
+/*Table styling for the dashboard business leads table*/
+table {
+    border: 2px solid #333333;
+}
+
 /* ------------------------------Navbar Styles------------------------------ */
 .navbar {
     background-color: #f2f1ef;
@@ -120,6 +125,16 @@ html {
 .err{
     color: darkred;
 }
+
+/*----------------------------Datatable Styles---------------------------------*/
+#bl-table tr:hover td {
+    background-color: #f1f1f1;
+}
+
+td {
+    padding: 5px;
+}
+
 /*-------------------Approval requests styles------------------*/
 /* Apply general table styles */
 .approval_request {

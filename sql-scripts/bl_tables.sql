@@ -176,17 +176,26 @@ CREATE TABLE IF NOT EXISTS `leads`(
 --
 INSERT INTO `leads`(
     `name`,
+    `address`,
+    `contact_phone`,
     `slic`,
-    `assigned_to`
+    `assigned_to`,
+    `created_at`
 )
 VALUES (
     'Google',
+    '1600 Amphitheatre Parkway in Mountain View, California',
+    '1234567890',
     9701,
-    3
+    3,
+    NOW()
 ), (
     'Daiso',
+    '710 6th Ave S, Seattle, WA 98104',
+    '0987654321',
     9782,
-    3
+    3,
+    NOW()
 );
 
 -- --------------------------------------------------------
