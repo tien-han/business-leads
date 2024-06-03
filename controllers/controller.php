@@ -308,7 +308,6 @@ class Controller
             // assign variables
             $hashKey = $_GET["key"];
             $email = $_GET["email"];
-            echo $email;
             // get today's date to check against the expiration
             $curDate = date("Y-m-d H:i:s");
             // connect to the database
@@ -334,20 +333,21 @@ class Controller
                 die('The link used to access this page is invalid.');
             }
 
-            // check the date of the code
+            // check the date of the code (should not be later than the expiration date)
             $expDate = $row['expDate'];
             if ($expDate >= $curDate) {
                 // check if the new password has been entered
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // if the page has posted, set the password
                     $password = $_POST["password"];
-                    echo $password;
-                    // check if it's a valid password
+                    // check if it's a valid password according to our site
                     if (Validate::validatePassword($password)) {
-                        $sql = "UPDATE users SET password = :password WHERE email = :email";
+                        $sql = "UPDATE users SET password = :password WHERE email = :email;
+                                DELETE FROM password_reset_temp WHERE `key`= :key AND `email`= :email;";
                         $statement = $dbh->prepare($sql);
                         $statement->bindParam(":password", $password);
                         $statement->bindParam(":email", $email);
+                        $statement->bindParam(":key", $hashKey);
                         $statement->execute();
                     } else {
                         $this->_f3->set('errors["reset"]', "please enter a valid password");
