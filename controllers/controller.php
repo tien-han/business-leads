@@ -286,9 +286,20 @@ class Controller
         echo $view->render('views/password-request.html');
     }
 
-    //TODO: Add in PHP Doc block about what this method renders
+    /**
+     * The function for displaying the password-email view.
+     * This page will only be accessed using the link sent in an email,
+     * so if the correct items aren't in the URL it will not load.
+     * @return void
+     */
     function passwordEmail()
     {
+        // if the link doesn't have a key OR an email, die
+        if (!isset($_GET["key"]) || !isset($_GET["email"])) {
+            // TODO: MAKE AN ERROR PAGE FOR THESE ERRORS
+            die('The link used to access this page is invalid.');
+        }
+
         // if the correct items are in the link used to reach this page AND
         // the page has not been posted (don't allow use of the link twice)
         if (isset($_GET["key"]) && isset($_GET["email"])) {
@@ -324,7 +335,7 @@ class Controller
             // check the date of the code
             $expDate = $row['expDate'];
             if ($expDate >= $curDate) {
-                // check if
+                // check if the new password has been entered
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // if the page has posted, set the password
                     $password = $_POST["password"];
@@ -341,7 +352,8 @@ class Controller
                     }
                 }
             } else {
-                // if we get here, their code was expired
+                // if we get here, their code was expired OR
+                // we should delete it and not load the page
                 die("This code is expired");
             }
         }
