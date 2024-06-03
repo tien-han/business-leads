@@ -352,8 +352,13 @@ class Controller
                     }
                 }
             } else {
-                // if we get here, their code was expired OR
+                // if we get here, their code was expired
                 // we should delete it and not load the page
+                $sql = "DELETE FROM password_reset_temp WHERE email = :email";
+                $statement = $dbh->prepare($sql);
+                $statement->bindParam(":email", $email);
+                $statement->execute();
+
                 die("This code is expired");
             }
         }
