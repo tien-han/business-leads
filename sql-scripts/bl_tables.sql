@@ -78,14 +78,69 @@ CREATE TABLE IF NOT EXISTS `slics`(
 --
 INSERT INTO `slics`(
     `id`,
-    `name`
+    `name`,
+    `created_at`
 )
 VALUES (
     9701,
-    'THE DALLES'
+    'THE DALLES',
+    NOW()
 ), (
     9782,
-    'LA GRANDE'
+    'LA GRANDE',
+    NOW()
+), (
+    9801,
+    'TUKWILA',
+    NOW()
+), (
+    9890,
+    'YAKIMA',
+    NOW()
+), (
+    9930,
+    'KENNEWICK',
+    NOW()
+), (
+    8350,
+    'LEWISTON',
+    NOW()
+), (
+    9780,
+    'PENDLETON',
+    NOW()
+), (
+    9784,
+    'ENTERPRISE',
+    NOW()
+), (
+    9891,
+    'ELLENSBURG',
+    NOW()
+), (
+    9931,
+    'WALLA WALLA',
+    NOW()
+), (
+    8351,
+    'GRANGEVILLE',
+    NOW()
+), (
+    9781,
+    'BAKER',
+    NOW()
+), (
+    9785,
+    'HERMISTON',
+    NOW()
+), (
+    9876,
+    'PACIFIC',
+    NOW()
+), (
+    9910,
+    'PULLMAN',
+    NOW()
 );
 
 -- --------------------------------------------------------
@@ -141,7 +196,9 @@ CREATE TABLE IF NOT EXISTS `messages`(
     FOREIGN KEY (author_id) REFERENCES users(id),
     FOREIGN KEY (lead_id) REFERENCES leads(id)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
-
+--
+-- Dumping data for table `messages`
+--
 INSERT INTO messages(
     `date`,
     `author_id`,
@@ -159,11 +216,15 @@ INSERT INTO messages(
     'This lead may be a multi million dollar deal, please contact ASAP.'
 );
 
--- without this token database we can't reset passwords
--- this file will be edited by php files, we do not need dummy data
+-- --------------------------------------------------------
+--
+-- Table structure for table `password_reset_temp`
+--
+-- Note: This token database is used to reset passwords
+-- Dummy data isn't needed as data will be populated by the "reset password" feature
+--
 CREATE TABLE `password_reset_temp` (
     `email` varchar(250) NOT NULL,
     `key` varchar(250) NOT NULL,
     `expDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
