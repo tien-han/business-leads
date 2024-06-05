@@ -204,10 +204,19 @@ class Controller
                     $this->_f3->set('errors["email"]', 'Please enter a valid UPS email!');
                 }*/
                 if (empty($this->_f3->get('errors'))) {
-                    DataLayer::passwordMatches($email);
+                    // save whether or not the email was sent
+                   $success = DataLayer::sendPasswordReset($email);
+                   // use the success variable to determine what to show
+                    if ($success != null) {
+                        // set a message to display letting them know it was sent
+                        $this->_f3->set('errors["email"]', 'A reset email has been sent');
+                    }
+                } else {
+                    // if it doesn't match, show the user an error
+                    $this->_f3->set('errors["email"]', 'Your email is not in the database. Sign up below.');
+                }
                 }
             }
-        }
         $view = new Template();
         echo $view->render('views/password-request.html');
     }

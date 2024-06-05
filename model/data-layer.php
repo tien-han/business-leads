@@ -70,9 +70,12 @@ class DataLayer
     }
 
     /**
-     *
+     * This method will check the user exists in the database
+     * and then send a password reset email with a link to another page.
+     * @param $email string user email
+     * @return $mailSuccess true if the email was sent
      */
-    function sendPasswordReset($email)
+    static function sendPasswordReset($email) : bool
     {
         // if the email is valid, initiate the database lookup
         require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
@@ -127,8 +130,8 @@ class DataLayer
             $message = '<p>Dear ' . ucfirst($row['first_name']) . ',</p>
                             <p>Please click on the link to reset your password:</p>
                             <br>
-                            <p><a href = "https://www.'. $_SERVER["HTTP_HOST"] .'.com/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '">
-                            https://www.www.smarkwardt.greenriverdev.com/328/business-leads/password-email.php?key=' . $hashKey . '&email=' . $email . '</a></p>
+                            <p><a href = "https://www.' . $_SERVER["HTTP_HOST"] . '/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '">
+                            https://www.' . $_SERVER["HTTP_HOST"] . '/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '</a></p>
                             <br>
                             <p>This link will expire after 24 hours. If you did not request this email, 
                             please let your supervisor know. </p>';
@@ -142,13 +145,9 @@ class DataLayer
 
             // Send email
             $mailSuccess = mail($to, $subject, $message, $headers);
-            if ($mailSuccess != null) {
-                // set a message to display letting them know it was sent
-                $this->_f3->set('errors["email"]', 'A reset email has been sent');
-            }
-        } else {
-            // if it doesn't match, show the user an error
-            $this->_f3->set('errors["email"]', 'Your email is not in the database. Sign up below.');
+            return $mailSuccess;
         }
+        // if the row was not grabbed, user does not exist
+        return false;
     }
 }
