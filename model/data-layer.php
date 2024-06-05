@@ -73,7 +73,7 @@ class DataLayer
      * This method will check the user exists in the database
      * and then send a password reset email with a link to another page.
      * @param $email string user email
-     * @return $mailSuccess true if the email was sent
+     * @return $mailSuccess bool if the email was sent
      */
     static function sendPasswordReset($email) : bool
     {
@@ -149,5 +149,36 @@ class DataLayer
         }
         // if the row was not grabbed, user does not exist
         return false;
+    }
+
+    /**
+     * This function will check if the email and key provided
+     * match up with the email and key in the database.
+     *
+     * @param $date dateTime current date
+     * @param $email string user email
+     * @param $key string the hashed key from the email link
+     * @return array of results
+     */
+    static function checkPasswordResetKey($email, $key) : array
+    {
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+
+        // check the database matches - the email and key should be in the same row
+        $sql = "SELECT * FROM `password_reset_temp` WHERE `key`= :key and `email`= :email";
+        $statement = $dbh->prepare($sql);
+
+        // bind the parameters and execute
+        $statement->bindParam(":email", $email);
+        $statement->bindParam(":key", $key);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        return $row;
     }
 }

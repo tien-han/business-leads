@@ -204,7 +204,7 @@ class Controller
                     $this->_f3->set('errors["email"]', 'Please enter a valid UPS email!');
                 }*/
                 if (empty($this->_f3->get('errors'))) {
-                    // save whether or not the email was sent
+                    // save whether the email was sent or not
                    $success = DataLayer::sendPasswordReset($email);
                    // use the success variable to determine what to show
                     if ($success != null) {
@@ -244,6 +244,12 @@ class Controller
             // get today's date to check against the expiration
             $curDate = date("Y-m-d H:i:s");
             // connect to the database
+            $row = DataLayer::checkPasswordResetKey($email, $hashKey);
+            if (!$row){
+                // if the link is invalid, the page should not load
+                die('The link used to access this page is invalid.');
+            }
+
             require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
 
             try {
@@ -252,22 +258,9 @@ class Controller
                 die($e->getMessage());
             }
 
-            // check the database matches - the email and key should be in the same row
-            $sql = "SELECT * FROM `password_reset_temp` WHERE `key`= :key and `email`= :email";
-            $statement = $dbh->prepare($sql);
-
-            // bind the parameters and execute
-            $statement->bindParam(":email", $email);
-            $statement->bindParam(":key", $hashKey);
-            $statement->execute();
-            $row = $statement->fetch(PDO::FETCH_ASSOC);
-            if (!$row) {
-                // if the link is invalid, the page should not load
-                die('The link used to access this page is invalid.');
-            }
-
             // check the date of the code (should not be later than the expiration date)
             $expDate = $row['expDate'];
+            echo $expDate;
             if ($expDate >= $curDate) {
                 // check if the new password has been entered
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
