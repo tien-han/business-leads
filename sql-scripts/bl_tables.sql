@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `users`(
     `account_activated` BOOLEAN DEFAULT FALSE,
     `account_activated_at` DATETIME DEFAULT NULL,
     `role` VARCHAR(255) DEFAULT NULL,
+    `slic` INT DEFAULT NULL,
+    FOREIGN KEY (slic) REFERENCES slics(id),
     `created_at` DATETIME DEFAULT NULL,
     `deleted` BOOLEAN DEFAULT FALSE,
     `deleted_at` DATETIME DEFAULT NULL
@@ -47,7 +49,8 @@ INSERT INTO `users`(
     `email`,
     `password`,
     `account_activated`,
-    `role`
+    `role`,
+    `slic`
 )
 VALUES (
     'Annie',
@@ -55,24 +58,27 @@ VALUES (
     'annie@ups.com',
     'admin',
     true,
-    'Center Manager'
+    'Center Manager',
+        9782
 ), (
     'Miedrail',
     'Pelilde',
     'm.pelilde@ups.com',
     'admin',
     false,
-    'Division Manager'
+    'Division Manager',
+    9701
 ), (
     'admin',
     'admin',
     'admin@ups.com',
     PASSWORD('admin'),
     true,
-    'Division Manager'
+    'Division Manager',
+    9701
 );
 
--- --------------------------------------------------------
+-----------------------------------------------
 --
 -- Table structure for table `slics`
 --
@@ -198,6 +204,13 @@ VALUES (
     '710 6th Ave S, Seattle, WA 98104',
     '0987654321',
     9782,
+    3,
+    NOW()
+), (
+    'Esme and Elodie',
+    '710 S 3rd St, Renton, WA 98057',
+    '1234567890',
+    9701,
     3,
     NOW()
 );
