@@ -14,6 +14,7 @@ class User
     private string $_email;
     private int $_slic;
     private string $_role;
+    private bool $_accessApproved;
 
     /**
      * The constructor for the User class, this represents a "base" user that we can inherit from.
@@ -23,15 +24,17 @@ class User
      * @param string $email the user's email
      * @param int $slic the user's SLIC #
      * @param string $role the user's role in the application
+     * @param bool $accessApproved whether the user's access has been approved or not
      */
     public function __construct(string $firstName="unknown", string $lastName="unknown", string $email="unknown",
-                                int $slic=0, string $role="unknown")
+                                int $slic=0, string $role="unknown", bool $accessApproved=false)
     {
         $this->_firstName = $firstName;
         $this->_lastName = $lastName;
         $this->_email = $email;
         $this->_slic = $slic;
         $this->_role = $role;
+        $this->_accessApproved = $accessApproved;
     }
 
     //--------------------------------Getters and Setters--------------------------------
@@ -145,5 +148,27 @@ class User
     public function getRole(): string
     {
         return $this->_role;
+    }
+
+    /**
+     * Set the user's access (if they were approved or not)
+     *
+     * @param bool $approved if the user's access is approved
+     *
+     * @return void
+     */
+    public function setAccessApproved(bool $approved): void
+    {
+        $this->_accessApproved = $approved;
+    }
+
+    /**
+     * Get whether the user's access has been approved
+     *
+     * @return bool whether the user's access has been approved or not
+     */
+    public function getAccessApproved(): bool
+    {
+        return $this->_accessApproved;
     }
 }

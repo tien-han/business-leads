@@ -1,6 +1,11 @@
 <?php
 
-//Get all business leads from the database
+/**
+ * This PHP script pulls all business leads from the database.
+ *
+ * @author Tien Han <tienthuyhan@gmail.com>
+ * @date   6/7/2024
+ */
 
 //1. Connect to the database
 require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';

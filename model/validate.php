@@ -16,9 +16,10 @@ class Validate
      * @param string $name given string name to validate
      * @return bool true if name is valid, false if not
      */
-//ctype_alpha($name) &&
     static function validateName($name): bool
     {
+        //We're not using ctype_alpha($name) because it doens't allow spaces, and we use this
+        //method for validating "business name", which may have spaces.
         return (strlen($name) >= 2 && preg_match('/^[a-zA-Z ]+$/', $name));
     }
 

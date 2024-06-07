@@ -59,7 +59,7 @@ VALUES (
     'admin',
     true,
     'Center Manager',
-        9782
+    9782
 ), (
     'Miedrail',
     'Pelilde',
@@ -78,7 +78,7 @@ VALUES (
     9701
 );
 
------------------------------------------------
+-- ---------------------------------------------
 --
 -- Table structure for table `slics`
 --
