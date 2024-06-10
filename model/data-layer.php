@@ -179,6 +179,15 @@ class DataLayer
         $statement->bindParam(":key", $key);
         $statement->execute();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        // handle the boolean we get if the statement fails
+        if (!$row){
+            // if the link is invalid, the page should not load
+            $resetError = 'The link used to access this page is expired.';
+            $GLOBALS['f3']->set('SESSION.resetError, $resetError');
+            $GLOBALS['f3']->reroute("error");
+        }
+
         return $row;
     }
 
@@ -212,7 +221,8 @@ class DataLayer
         }
     }
 
-    static function deleteExpiredResetKey($email){
+    static function deleteExpiredResetKey($email) : void
+    {
         // Require database connection credentials
         require_once $_SERVER['DOCUMENT_ROOT'].'/../config.php';
         try {
@@ -227,7 +237,8 @@ class DataLayer
         $statement = $dbh->prepare($sql);
         $statement->bindParam(":email", $email);
         $statement->execute();
-
-        die("This code is expired");
+        $resetError = "The link you used is expired. Please request a new one.";
+        $GLOBALS['f3']->set('SESSION.resetError', $resetError);
+        $GLOBALS['f3']->reroute("error");
     }
 }

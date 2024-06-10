@@ -229,10 +229,12 @@ class Controller
      */
     function passwordEmail()
     {
+        $resetError = '';
         // if the link doesn't have a key OR an email, die
         if (!isset($_GET["key"]) || !isset($_GET["email"])) {
-            // TODO: MAKE AN ERROR PAGE FOR THESE ERRORS
-            die('The link used to access this page is invalid.');
+            $resetError = "The link used to access this page is invalid.";
+            $this->_f3->set('SESSION.resetError', $resetError);
+            $this->_f3->reroute("error");
         }
 
         // if the correct items are in the link used to reach this page AND
@@ -245,10 +247,6 @@ class Controller
             $curDate = date("Y-m-d H:i:s");
             // connect to the database
             $row = DataLayer::checkPasswordResetKey($email, $hashKey);
-            if (!$row){
-                // if the link is invalid, the page should not load
-                die('The link used to access this page is invalid.');
-            }
 
             // check the date of the code (should not be later than the expiration date)
             $expDate = $row['expDate'];
@@ -261,7 +259,7 @@ class Controller
                     if (DataLayer::resetPassword($hashKey, $email, $password)){
                         $this->_f3->set('errors["reset"]', "Password changed");
                     } else {
-                        $this->_f3->set('errors["reset"]', "please enter a valid password");
+                        $this->_f3->set('errors["reset"]', "Please enter a valid password");
                     }
                 }
             } else {
@@ -671,5 +669,12 @@ class Controller
             $view = new Template();
             echo $view->render('views/deleteRequest.html');
         }
+    }
+
+    function error(): void
+    {
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/error.html');
     }
 }

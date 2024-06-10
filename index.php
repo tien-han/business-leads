@@ -107,6 +107,10 @@ $f3-> route('GET|POST /deleteRequest', function() {
     $GLOBALS['controller']->deleteRequest();
 });
 
+$f3->route('GET|POST /error', function(){
+    $GLOBALS['controller']->error();
+});
+
 
 //Run Fat-Free
 $f3->run();
