@@ -255,6 +255,8 @@ class Controller
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // if the page has posted, set the password
                     $password = $_POST["password"];
+                    // hash the password
+                    $password = password_hash($password, PASSWORD_DEFAULT);
                     // check if it's a valid password according to our site
                     if (DataLayer::resetPassword($hashKey, $email, $password)){
                         $this->_f3->set('errors["reset"]', "Password changed");
