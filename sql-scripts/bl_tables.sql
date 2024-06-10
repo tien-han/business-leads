@@ -17,66 +17,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Drop existing tables
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS leads;
-DROP TABLE IF EXISTS slics;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS slics;
 DROP TABLE IF EXISTS password_reset_temp;
-
--- --------------------------------------------------------
---
--- Table structure for table `users`
---
-CREATE TABLE IF NOT EXISTS `users`(
-    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `first_name` VARCHAR(255) DEFAULT NULL,
-    `last_name` VARCHAR(255) DEFAULT NULL,
-    `email` VARCHAR(255) DEFAULT NULL,
-    `password` VARCHAR(255) DEFAULT NULL,
-    `account_activated` BOOLEAN DEFAULT FALSE,
-    `account_activated_at` DATETIME DEFAULT NULL,
-    `role` VARCHAR(255) DEFAULT NULL,
-    `slic` INT DEFAULT NULL,
-    FOREIGN KEY (slic) REFERENCES slics(id),
-    `created_at` DATETIME DEFAULT NULL,
-    `deleted` BOOLEAN DEFAULT FALSE,
-    `deleted_at` DATETIME DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
---
--- Dumping data for table `users`
---
-INSERT INTO `users`(
-    `first_name`,
-    `last_name`,
-    `email`,
-    `password`,
-    `account_activated`,
-    `role`,
-    `slic`
-)
-VALUES (
-    'Annie',
-    'Appletree',
-    'annie@ups.com',
-    'admin',
-    true,
-    'Center Manager',
-    9782
-), (
-    'Miedrail',
-    'Pelilde',
-    'm.pelilde@ups.com',
-    'admin',
-    false,
-    'Division Manager',
-    9701
-), (
-    'admin',
-    'admin',
-    'admin@ups.com',
-    PASSWORD('admin'),
-    true,
-    'Division Manager',
-    9701
-);
 
 -- ---------------------------------------------
 --
@@ -158,6 +101,63 @@ VALUES (
     'PULLMAN',
     NOW()
 );
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `users`
+--
+CREATE TABLE IF NOT EXISTS `users`(
+                                      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                                      `first_name` VARCHAR(255) DEFAULT NULL,
+                                      `last_name` VARCHAR(255) DEFAULT NULL,
+                                      `email` VARCHAR(255) DEFAULT NULL,
+                                      `password` VARCHAR(255) DEFAULT NULL,
+                                      `account_activated` BOOLEAN DEFAULT FALSE,
+                                      `account_activated_at` DATETIME DEFAULT NULL,
+                                      `role` VARCHAR(255) DEFAULT NULL,
+                                      `slic` INT DEFAULT NULL,
+                                      FOREIGN KEY (slic) REFERENCES slics(id),
+                                      `created_at` DATETIME DEFAULT NULL,
+                                      `deleted` BOOLEAN DEFAULT FALSE,
+                                      `deleted_at` DATETIME DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+--
+-- Dumping data for table `users`
+--
+INSERT INTO `users`(
+    `first_name`,
+    `last_name`,
+    `email`,
+    `password`,
+    `account_activated`,
+    `role`,
+    `slic`
+)
+VALUES (
+           'Annie',
+           'Appletree',
+           'annie@ups.com',
+           'admin',
+           true,
+           'Center Manager',
+           9782
+       ), (
+           'Miedrail',
+           'Pelilde',
+           'm.pelilde@ups.com',
+           'admin',
+           false,
+           'Division Manager',
+           9701
+       ), (
+           'admin',
+           'admin',
+           'admin@ups.com',
+           PASSWORD('admin'),
+           true,
+           'Division Manager',
+           9701
+       );
 
 -- --------------------------------------------------------
 --
