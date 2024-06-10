@@ -349,7 +349,7 @@ class Controller
             }
 
             //role
-            if (validRole($role)) {
+            if (Validate::validRole($role)) {
                 $this->_f3->get('SESSION.user')->setRole($role);
             } else {
                 $this->_f3->set('errors["roleSignUpError"]', "please enter a valid role");
@@ -632,5 +632,64 @@ class Controller
         //Render a view page
         $view = new Template();
         echo $view->render('views/dashboard.html');
+    }
+
+    function approveRequest(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+            try {
+                $this->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                echo 'connected to database!';
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+
+            $id = $_POST['id'];
+
+            //define query
+            $sql = 'UPDATE users Set account_activated = 1  WHERE id = :ID ';
+
+            //prepare the statement
+            $statement = $this->_dbh->prepare($sql);
+
+            //bind parameters
+            $statement->bindParam(':ID', $id);
+
+
+            $statement->execute();
+            echo $id;
+
+        }
+        $view = new Template();
+        echo $view->render('views/approveRequest.html');
+    }
+
+    function deleteRequest(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+            try {
+                $this->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                echo 'connected to database!';
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+            $id = $_POST['id'];
+            $sql = 'DELETE FROM users WHERE id = :ID ';
+            //prepare the statement
+            $statement = $this->_dbh->prepare($sql);
+
+            //bind parameters
+            $statement->bindParam(':ID', $id);
+
+            $statement->execute();
+
+            $view = new Template();
+            echo $view->render('views/deleteRequest.html');
+        }
     }
 }

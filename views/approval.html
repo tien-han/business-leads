@@ -40,7 +40,7 @@
 
     <div>
         <h1>Approve Pending Requests</h1>
-        <table class="approval_request">
+        <table id="table" class="approval_request">
             <tr>
                 <td>
                    <b>Last Name</b>
@@ -80,10 +80,13 @@
                            {{ @row.created_at}}
                        </td>
                        <td>
-                           <button class="btn btn-primary" type="submit" onclick="addUser()">Approve</button>
+                           <!--add event listener with id from db -->
+                           <button class="btn btn-primary approve_button" type="submit" name="approve_button"
+                                   value="approve" id="{{ @row.id}}">Approve</button>
                        </td>
                        <td>
-                           <button class="btn btn-danger" type="submit" onclick="deleteUser">Delete</button>
+                           <button class="btn btn-danger delete_button" type="submit" name="delete_button"
+                                   value="delete" data-id="{{ @row.id}}">Delete</button>
                        </td>
                    </tr>
                 </repeat>
@@ -92,3 +95,44 @@
     </div>
 </body>
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+  $(".approve_button").click (function(){
+      //alert($(this).attr("id"));
+       var id = ($(this).attr("id"));
+      //addUser(id);
+      $.ajax({
+          url: 'https://garrettballreich.greenriverdev.com/328/business-leads/approveRequest',
+          type: 'POST',
+          data: {id: id},
+          success: function(response) {
+              alert("Request approved: " + id);
+
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              alert("An error occurred: " + textStatus);
+          }
+      });
+  });
+
+  $(".delete_button").click (function(){
+
+      var id = ($(this).attr("data-id"));
+
+      $.ajax({
+          url: 'https://garrettballreich.greenriverdev.com/328/business-leads/deleteRequest',
+          type: 'POST',
+          data: {id: id},
+          success: function(response) {
+              alert("Request approved: " + id);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              alert("An error occurred: " + textStatus);
+          }
+      });
+  });
+
+</script>

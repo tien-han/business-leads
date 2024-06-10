@@ -99,5 +99,14 @@ $f3-> route('GET /dashboard', function() {
     $GLOBALS['controller']->dashboard();
 });
 
+$f3-> route('GET|POST /approveRequest', function() {
+    $GLOBALS['controller']->approveRequest();
+});
+
+$f3-> route('GET|POST /deleteRequest', function() {
+    $GLOBALS['controller']->deleteRequest();
+});
+
+
 //Run Fat-Free
 $f3->run();
