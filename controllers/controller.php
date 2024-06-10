@@ -250,31 +250,16 @@ class Controller
                 die('The link used to access this page is invalid.');
             }
 
-            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-
-            try {
-                $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            } catch (PDOException $e) {
-                die($e->getMessage());
-            }
-
             // check the date of the code (should not be later than the expiration date)
             $expDate = $row['expDate'];
-            echo $expDate;
             if ($expDate >= $curDate) {
                 // check if the new password has been entered
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // if the page has posted, set the password
                     $password = $_POST["password"];
                     // check if it's a valid password according to our site
-                    if (Validate::validatePassword($password)) {
-                        $sql = "UPDATE users SET password = :password WHERE email = :email;
-                                DELETE FROM password_reset_temp WHERE `key`= :key AND `email`= :email;";
-                        $statement = $dbh->prepare($sql);
-                        $statement->bindParam(":password", $password);
-                        $statement->bindParam(":email", $email);
-                        $statement->bindParam(":key", $hashKey);
-                        $statement->execute();
+                    if (DataLayer::resetPassword($hashKey, $email, $password)){
+                        $this->_f3->set('errors["reset"]', "Password changed");
                     } else {
                         $this->_f3->set('errors["reset"]', "please enter a valid password");
                     }
@@ -282,12 +267,7 @@ class Controller
             } else {
                 // if we get here, their code was expired
                 // we should delete it and not load the page
-                $sql = "DELETE FROM password_reset_temp WHERE email = :email";
-                $statement = $dbh->prepare($sql);
-                $statement->bindParam(":email", $email);
-                $statement->execute();
-
-                die("This code is expired");
+                DataLayer::deleteExpiredResetKey($email);
             }
         }
         $view = new Template();

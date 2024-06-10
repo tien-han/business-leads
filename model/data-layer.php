@@ -5,7 +5,7 @@
  * data from the database.
  *
  * @author Tien Han <tienthuyhan@gmail.com>, Sage Markwardt
- * @date   6/5/2024
+ * @date   6/10/2024
  */
 class DataLayer
 {
@@ -130,8 +130,8 @@ class DataLayer
             $message = '<p>Dear ' . ucfirst($row['first_name']) . ',</p>
                             <p>Please click on the link to reset your password:</p>
                             <br>
-                            <p><a href = "https://www.' . $_SERVER["HTTP_HOST"] . '/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '">
-                            https://www.' . $_SERVER["HTTP_HOST"] . '/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '</a></p>
+                            <p><a href = "https://' . $_SERVER["HTTP_HOST"] . '/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '">
+                            https://' . $_SERVER["HTTP_HOST"] . '/328/business-leads/password-email?key=' . $hashKey . '&email=' . $email . '</a></p>
                             <br>
                             <p>This link will expire after 24 hours. If you did not request this email, 
                             please let your supervisor know. </p>';
@@ -180,5 +180,54 @@ class DataLayer
         $statement->execute();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         return $row;
+    }
+
+    /**
+     * This function will UPDATE a user's password
+     * from the old to their chosen new one.
+     * @param $password
+     * @return bool
+     */
+    static function resetPassword($hashKey, $email, $password) : bool {
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+
+        if (Validate::validatePassword($password)) {
+            // update their password AND delete the reset key at the same time
+            $sql = "UPDATE users SET password = :password WHERE email = :email;
+                                DELETE FROM password_reset_temp WHERE `key`= :key AND `email`= :email;";
+            $statement = $dbh->prepare($sql);
+            $statement->bindParam(":password", $password);
+            $statement->bindParam(":email", $email);
+            $statement->bindParam(":key", $hashKey);
+            $statement->execute();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    static function deleteExpiredResetKey($email){
+        // Require database connection credentials
+        require_once $_SERVER['DOCUMENT_ROOT'].'/../config.php';
+        try {
+            // instantiate the PDO database Object
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        }
+        catch (PDOException $e){
+            die($e->getMessage());
+        }
+
+        $sql = "DELETE FROM password_reset_temp WHERE email = :email";
+        $statement = $dbh->prepare($sql);
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+
+        die("This code is expired");
     }
 }
