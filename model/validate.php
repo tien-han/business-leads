@@ -76,7 +76,12 @@ class Validate
         return preg_match($pattern, $password);
     }
 
-//needs work :'(
+    /**
+     * @param $address
+     * @return bool
+     * validates if the address entered contains
+     * letters and numbers
+     */
     static function validAddress($address)
     {
         if (!empty($address)) {
@@ -85,28 +90,46 @@ class Validate
         }
         return false;
     }
-//checks if the phone number is greater than 10
-//digits and contains all numbers
+    /**
+     * @param $phone
+     * @return bool
+     * checks if the phone number is greater than 10
+     * digits and contains all numbers
+     */
     static function validPhone($phone)
     {
         return strlen($phone) === 10 && is_numeric($phone);
     }
 
-
-//check that the employee ID is all numeric
-//and a length of 7 digits
+    /**
+     * @param $ID
+     * @return bool
+     * chedck that the employee ID is all numberis
+     * and a length os 7 digits
+     */
     static function validEmployeeID($ID)
     {
         return strlen($ID) === 7 && is_numeric($ID);
     }
-//check that the slic is 4 digits long
-//and only contains numbers
+    /**
+     * @param $slic
+     * @return bool
+     * checks that the slic is only 4 digits
+     * long and contains only numbers
+     */
     static function validSlic($slic)
     {
         return strlen($slic) === 4 && is_numeric($slic);
     }
 
     //-------------------SIGN UP FORM VALIDATION--------------------------------//
+
+    /**
+     * @param $role
+     * @return bool
+     * checks that the role is either "CM" "BD" "DM"
+     * to prevent any spoofing
+     */
     static function validRole($role)
     {
         return ($role === "CM" || $role == "BD" || $role == "DM");

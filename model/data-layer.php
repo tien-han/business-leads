@@ -47,6 +47,11 @@ class DataLayer
         }
     }
 
+    /**
+     * @param $email
+     * @return mixed|void
+     * returns the user based on the email
+     */
     static function getUser($email)
     {
         //1. Connect to the database
