@@ -25,7 +25,7 @@ class DataLayer
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         //2. Prepare the SQL statement
@@ -60,7 +60,7 @@ class DataLayer
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         //2. Prepare the SQL statement
@@ -88,7 +88,7 @@ class DataLayer
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         // prep the statement
@@ -172,7 +172,7 @@ class DataLayer
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         // check the database matches - the email and key should be in the same row
@@ -209,7 +209,7 @@ class DataLayer
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         if (Validate::validatePassword($password)) {
@@ -242,7 +242,7 @@ class DataLayer
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         }
         catch (PDOException $e){
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         $sql = "DELETE FROM password_reset_temp WHERE email = :email";
@@ -272,7 +272,7 @@ class DataLayer
         try {
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
         $sql = 'INSERT INTO users ( first_name, last_name, email, password, account_activated, role, created_at) 
                    VALUES(:First, :Last, :Email, :Password, :AccountActivated, :Role, :CreatedAt)';
@@ -302,7 +302,7 @@ class DataLayer
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             //echo 'connected to database!';
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
 
         $sql = "SELECT * FROM users WHERE account_activated = 0";
@@ -327,7 +327,7 @@ class DataLayer
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             echo 'connected to database!';
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $GLOBALS['f3']->reroute("error");
         }
         //first
         $date = date('Y-m-d h:i:s', time());
@@ -358,7 +358,7 @@ class DataLayer
                 $GLOBALS['f3']->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
                 echo 'connected to database!';
             } catch (PDOException $e) {
-                die($e->getMessage());
+                $GLOBALS['f3']->reroute("error");
             }
 
             $id = $_POST['id'];
@@ -376,29 +376,6 @@ class DataLayer
             $statement->execute();
             echo $id;
 
-        }
-    }
-    static function deleteUser()
-    {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-
-            try {
-                $GLOBALS['f3']->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-                echo 'connected to database!';
-            } catch (PDOException $e) {
-                die($e->getMessage());
-            }
-            $id = $_POST['id'];
-            $sql = 'DELETE FROM users WHERE id = :ID ';
-            //prepare the statement
-            $statement = $GLOBALS['f3']->_dbh->prepare($sql);
-
-            //bind parameters
-            $statement->bindParam(':ID', $id);
-
-            $statement->execute();
         }
     }
 }
