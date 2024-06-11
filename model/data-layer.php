@@ -202,7 +202,8 @@ class DataLayer
      * @param $password
      * @return bool
      */
-    static function resetPassword($hashKey, $email, $password) : bool {
+    static function resetPassword($hashKey, $email, $password) : bool
+    {
         require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
 
         try {
@@ -252,6 +253,18 @@ class DataLayer
         $GLOBALS['f3']->set('SESSION.resetError', $resetError);
         $GLOBALS['f3']->reroute("error");
     }
+
+    /**
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $password
+     * @param $status
+     * @param $role
+     * @param $date
+     * @return void
+     * adds a user to the database
+     */
     static function addUser($firstName, $lastName, $email, $password, $status,$role, $date)
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
@@ -272,6 +285,67 @@ class DataLayer
         $statement->bindParam(':AccountActivated', $status);
         $statement->bindParam(':Role', $role);
         $statement->bindParam(':CreatedAt', $date);
+
+        $statement->execute();
+    }
+
+    /**
+     * @return void
+     * displays only users that have not been approved
+     */
+    static function displayUnapproved()
+    {
+        //connect to db
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            //echo 'connected to database!';
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+
+        $sql = "SELECT * FROM users WHERE account_activated = 0";
+
+        //prepare the statement
+        $statement = $dbh->prepare($sql);
+
+        //execute the statement
+        $statement->execute();
+
+        //process
+        //get the array
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        //add to session
+        $GLOBALS['f3']->set('approval', $result);
+    }
+    static function addLead($businessName, $businessAddress, $contactName, $businessPhone, $contactEmail, $driverName, $driverID, $slic)
+    {
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            echo 'connected to database!';
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        //first
+        $date = date('Y-m-d h:i:s', time());
+
+        $sql = 'INSERT INTO leads (name, address, contact_name, contact_phone, contact_email, ups_employee_name,
+                        ups_employee_id, slic, created_at) 
+                VALUES(:Name, :Address, :Contact, :Phone, :Email, :Driver, :DriverID, :Slic, :Created_at)';
+
+        $statement = $dbh->prepare($sql);
+        $statement->bindParam(':Name', $businessName);
+        $statement->bindParam(':Address', $businessAddress);
+        $statement->bindParam(':Contact', $contactName);
+        $statement->bindParam(':Phone', $businessPhone);
+        $statement->bindParam(':Email', $contactEmail);
+        $statement->bindParam(':Driver', $driverName);
+        $statement->bindParam(':DriverID', $driverID);
+        $statement->bindParam(':Slic', $slic);
+        $statement->bindParam(':Created_at', $date);
 
         $statement->execute();
     }

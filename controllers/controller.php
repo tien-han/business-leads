@@ -387,38 +387,8 @@ class Controller
      */
     function approval(): void
     {
-        //connect to db
-        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+        DataLayer::displayUnapproved();
 
-        try {
-            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            //echo 'connected to database!';
-        } catch (PDOException $e) {
-            die($e->getMessage());
-        }
-
-        $sql = "SELECT * FROM users WHERE account_activated = 0";
-
-        //prepare the statement
-        $statement = $dbh->prepare($sql);
-
-        //execute the statement
-        $statement->execute();
-
-        //process
-        //get the array
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        //add to session
-        $this->_f3->set('approval', $result);
-
-        /*
-        echo "<h1>Approve Requests</h1>";
-        echo "<ol>";
-        foreach($result as $row){
-            echo "<li>".$row['last_name']. ", ".$row['first_name']."-".$row['']."</li>";
-        }
-        echo "</ol>";
-        */
         $view = new Template();
         echo $view->render('views/approval.html');
     }
@@ -516,33 +486,7 @@ class Controller
             if (empty($this->_f3->get('errors'))) {
                 //add lead object to DB
                 //email lead object to perspective center manager
-                require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-
-                try {
-                    $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-                    echo 'connected to database!';
-                } catch (PDOException $e) {
-                    die($e->getMessage());
-                }
-                //first
-                $date = date('Y-m-d h:i:s', time());
-
-                $sql = 'INSERT INTO leads (name, address, contact_name, contact_phone, contact_email, ups_employee_name,
-                        ups_employee_id, slic, created_at) 
-                VALUES(:Name, :Address, :Contact, :Phone, :Email, :Driver, :DriverID, :Slic, :Created_at)';
-
-                $statement = $dbh->prepare($sql);
-                $statement->bindParam(':Name', $businessName);
-                $statement->bindParam(':Address', $businessAddress);
-                $statement->bindParam(':Contact', $contactName);
-                $statement->bindParam(':Phone', $businessPhone);
-                $statement->bindParam(':Email', $contactEmail);
-                $statement->bindParam(':Driver', $driverName);
-                $statement->bindParam(':DriverID', $driverID);
-                $statement->bindParam(':Slic', $slic);
-                $statement->bindParam(':Created_at', $date);
-
-                $statement->execute();
+                DataLayer::addLead($businessName, $businessAddress, $contactName, $businessPhone, $contactEmail, $driverName, $driverID, $slic);
 
                 $this->_f3->reroute('form-summary');
             }
