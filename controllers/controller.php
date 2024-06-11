@@ -36,7 +36,7 @@ class Controller
 
     /**
      * The method for rendering the Contact Us page
-     *
+     * It will allow the user to send a message to the administrator.
      * @return void
      */
     function contactUs(): void
@@ -132,7 +132,7 @@ class Controller
 
     /**
      * The method for rendering the login page
-     *
+     * This will allow the user to log in
      * @return void
      */
     function login(): void
@@ -187,7 +187,9 @@ class Controller
 
     /**
      * The method for rendering the reset password request email page
-     *
+     * This page will allow the user to request an email with a special link
+     * to reset their password. It will not send if their email isn't in the
+     * database.
      * @return void
      */
     function passwordReset(): void
@@ -198,11 +200,10 @@ class Controller
 
             // Validate the email before attempting recovery email
             if (!empty($email)) {
-                //TODO: turn validation on for this page after testing is done
-                /*if (!Validate::validateUPSEmail($email)) {
+                if (!Validate::validateUPSEmail($email)) {
                     // add the error to the errors array
                     $this->_f3->set('errors["email"]', 'Please enter a valid UPS email!');
-                }*/
+                }
                 if (empty($this->_f3->get('errors'))) {
                     // save whether the email was sent or not
                    $success = DataLayer::sendPasswordReset($email);
@@ -276,7 +277,7 @@ class Controller
 
     /**
      * The method for rendering the signup page
-     *
+     * The form on this page will allow users to create an account.
      * @return void
      */
     function signUp(): void
@@ -566,7 +567,7 @@ class Controller
 
     /**
      * Method for rendering the main form's summary page
-     *
+     * which will show the information entered on the form
      * @return void
      */
     function formSummary(): void
@@ -578,7 +579,8 @@ class Controller
 
     /**
      * Method for rendering the dashboard page
-     *
+     * which will display information about business leads
+     * related to the specific user.
      * @return void
      */
     function dashboard(): void
@@ -588,6 +590,11 @@ class Controller
         echo $view->render('views/dashboard.html');
     }
 
+    /**
+     * This will render the approval page
+     * where an admin can approve an account request
+     * @return void
+     */
     function approveRequest(): void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -620,6 +627,10 @@ class Controller
         echo $view->render('views/approveRequest.html');
     }
 
+    /**
+     * This will render the page for deleting an account request
+     * @return void
+     */
     function deleteRequest(): void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -647,6 +658,11 @@ class Controller
         }
     }
 
+    /**
+     * This will render the error page
+     * which will be displayed if someone uses an old password reset link.
+     * @return void
+     */
     function error(): void
     {
         //Render a view page
