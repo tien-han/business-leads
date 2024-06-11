@@ -378,4 +378,27 @@ class DataLayer
 
         }
     }
+    static function deleteUser()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+            try {
+                $GLOBALS['f3']->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                echo 'connected to database!';
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+            $id = $_POST['id'];
+            $sql = 'DELETE FROM users WHERE id = :ID ';
+            //prepare the statement
+            $statement = $GLOBALS['f3']->_dbh->prepare($sql);
+
+            //bind parameters
+            $statement->bindParam(':ID', $id);
+
+            $statement->execute();
+        }
+    }
 }
