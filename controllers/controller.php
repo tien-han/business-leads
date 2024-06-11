@@ -583,32 +583,6 @@ class Controller
      */
     function dashboard(): void
     {
-        //$userSlic = $this->_f3->get('SESSION.user')->getSlic();
-        //
-        ////connect to db
-        //require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-        //
-        //try {
-        //    $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        //    echo 'connected to database!';
-        //} catch (PDOException $e) {
-        //    die($e->getMessage());
-        //}
-        //
-        //$sql = "SELECT * FROM leads WHERE slic = :Slic";
-        //
-        ////prepare the statement
-        //$statement = $dbh->prepare($sql);
-        //$statement->bindParam(':Slic', $userSlic);
-        ////execute the statement
-        //$statement->execute();
-        //
-        ////process
-        ////get the array of results from the db
-        ////add that array to the hive to process on the html page
-        //$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        //$this->_f3->set('lead',$result);
-
         //Render a view page
         $view = new Template();
         echo $view->render('views/dashboard.html');
