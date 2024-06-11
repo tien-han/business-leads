@@ -40,6 +40,7 @@ order to see business lead data and approve other users. They will see business 
 5. Has a history of commits from both team members to a Git repository. Commits are clearly commented.
     - This can be seen by going to the repository and clicking the tab `Insights` -> `Contributors`.
     - All teammates have a history of commits with meaningful commit messages.
+   ![github_insights.png](images%2Fgithub_insights.png)
 6. Uses OOP, and utilizes multiple classes, including at least one inheritance relationship.
    - `controller.php` has numerous examples of multiple classes being used with object oriented programming (OOP).
    - Multiple classes are used to support users, validation, leads, etc.
