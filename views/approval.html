@@ -1,3 +1,8 @@
+<!--
+    @author: Garrett Ballreich
+    @date: 6/11/2024
+    @description: User approval page.
+-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -98,41 +103,5 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-
-  $(".approve_button").click (function(){
-      //alert($(this).attr("id"));
-       var id = ($(this).attr("id"));
-      //addUser(id);
-      $.ajax({
-          url: 'https://garrettballreich.greenriverdev.com/328/business-leads/approveRequest',
-          type: 'POST',
-          data: {id: id},
-          success: function(response) {
-              alert("Request approved: " + id);
-
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-              alert("An error occurred: " + textStatus);
-          }
-      });
-  });
-
-  $(".delete_button").click (function(){
-
-      var id = ($(this).attr("data-id"));
-
-      $.ajax({
-          url: 'https://garrettballreich.greenriverdev.com/328/business-leads/deleteRequest',
-          type: 'POST',
-          data: {id: id},
-          success: function(response) {
-              alert("Request approved: " + id);
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-              alert("An error occurred: " + textStatus);
-          }
-      });
-  });
-
-</script>
+<!-- JS Script for approval users -->
+<script src="scripts/user-approval.js"></script>
