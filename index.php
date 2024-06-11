@@ -15,10 +15,10 @@ error_reporting(E_ALL);
 require_once('vendor/autoload.php');
 
 //Require the form validation file
-require_once('model/validate.php');
+//require_once('model/validate.php');
 //need to update composer with /classes
-require_once('classes/lead.php');
-require_once('classes/user.php');
+//require_once('classes/lead.php');
+//require_once('classes/user.php');
 
 $obj="";
 
@@ -88,29 +88,38 @@ $f3-> route('GET|POST /approval', function() {
 $f3-> route('GET|POST /form', function() {
     $GLOBALS['controller']->mainForm();
 });
-
-//Define the form summary route
+/**
+ * Route to the form-summary page
+ */
 $f3-> route('GET /form-summary', function() {
     $GLOBALS['controller']->formSummary();
 });
-
-//Define the dashboard route
+/**
+ * Route to the dashboard page
+ */
 $f3-> route('GET /dashboard', function() {
     $GLOBALS['controller']->dashboard();
 });
-
+/**
+ * Route to the approveRequest page
+ */
 $f3-> route('GET|POST /approveRequest', function() {
     $GLOBALS['controller']->approveRequest();
 });
-
+/**
+ * Route to the deleteRequest page
+ */
 $f3-> route('GET|POST /deleteRequest', function() {
     $GLOBALS['controller']->deleteRequest();
 });
-
+/**
+ * Route to the error page
+ */
 $f3->route('GET|POST /error', function(){
     $GLOBALS['controller']->error();
 });
 
-
-//Run Fat-Free
+/**
+ * run fat-free framework
+ */
 $f3->run();

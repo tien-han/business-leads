@@ -252,4 +252,27 @@ class DataLayer
         $GLOBALS['f3']->set('SESSION.resetError', $resetError);
         $GLOBALS['f3']->reroute("error");
     }
+    static function addUser($firstName, $lastName, $email, $password, $status,$role, $date)
+    {
+        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+        try {
+            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        $sql = 'INSERT INTO users ( first_name, last_name, email, password, account_activated, role, created_at) 
+                   VALUES(:First, :Last, :Email, :Password, :AccountActivated, :Role, :CreatedAt)';
+
+        $statement = $dbh->prepare($sql);
+        $statement->bindParam(':First', $firstName);
+        $statement->bindParam(':Last', $lastName);
+        $statement->bindParam(':Email', $email);
+        $statement->bindParam(':Password', $password);
+        $statement->bindParam(':AccountActivated', $status);
+        $statement->bindParam(':Role', $role);
+        $statement->bindParam(':CreatedAt', $date);
+
+        $statement->execute();
+    }
 }

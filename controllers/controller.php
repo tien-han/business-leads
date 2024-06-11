@@ -365,20 +365,8 @@ class Controller
                     'Reply-To' => 'webmaster@example.com',
                     'X-Mailer' => 'PHP/' . phpversion()
                 );
-                //First
-                $sql = 'INSERT INTO users ( first_name, last_name, email, password, account_activated, role, created_at) 
-                   VALUES(:First, :Last, :Email, :Password, :AccountActivated, :Role, :CreatedAt)';
 
-                $statement = $dbh->prepare($sql);
-                $statement->bindParam(':First', $firstName);
-                $statement->bindParam(':Last', $lastName);
-                $statement->bindParam(':Email', $email);
-                $statement->bindParam(':Password', $password);
-                $statement->bindParam(':AccountActivated', $status);
-                $statement->bindParam(':Role', $role);
-                $statement->bindParam(':CreatedAt', $date);
-
-                $statement->execute();
+                DataLayer::addUser($firstName, $lastName, $email, $password, $status, $role, $date);
 
                 $msg = "https://garrettballreich.greenriverdev.com/328/business-leads/approval";
                 mail($to, $subject, $msg, $headers);
