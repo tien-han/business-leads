@@ -226,6 +226,12 @@ class DataLayer
         }
     }
 
+    /**
+     * This script function will delete a key from the database if the user
+     * clicks on a password reset email and the site sees it's expired.
+     * @param $email
+     * @return void
+     */
     static function deleteExpiredResetKey($email) : void
     {
         // Require database connection credentials

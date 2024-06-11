@@ -2,8 +2,8 @@
 /**
  * The User class defines a User and methods to get/set user details.
  *
- * @author Garrett Ballreich, Tien Han <tienthuyhan@gmail.com>
- * @date   6/7/2024
+ * @author Garrett Ballreich, Tien Han <tienthuyhan@gmail.com>, Sage Markwardt
+ * @date   6/11/2024
  */
 
 class User

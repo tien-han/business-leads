@@ -15,6 +15,13 @@ class Contact
     private $_email;
     private $_concern;
 
+    /**
+     * Constructor for contact class.
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $concern
+     */
     public function __construct($firstName, $lastName, $email, $concern)
     {
         $this->_firstName = $firstName;
