@@ -400,14 +400,6 @@ class Controller
      */
     function mainForm(): void
     {
-        require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-
-        try {
-            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            //echo 'connected to database!';
-        } catch (PDOException $e) {
-            die($e->getMessage());
-        }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $businessName = $_POST['businessName'];
             $businessAddress = $_POST['businessAddress'];
@@ -529,32 +521,7 @@ class Controller
      */
     function approveRequest(): void
     {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
-
-            try {
-                $this->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-                echo 'connected to database!';
-            } catch (PDOException $e) {
-                die($e->getMessage());
-            }
-
-            $id = $_POST['id'];
-
-            //define query
-            $sql = 'UPDATE users Set account_activated = 1  WHERE id = :ID ';
-
-            //prepare the statement
-            $statement = $this->_dbh->prepare($sql);
-
-            //bind parameters
-            $statement->bindParam(':ID', $id);
-
-
-            $statement->execute();
-            echo $id;
-
-        }
+        DataLayer::approveUser();
         $view = new Template();
         echo $view->render('views/approveRequest.html');
     }

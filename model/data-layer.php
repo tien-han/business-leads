@@ -349,4 +349,33 @@ class DataLayer
 
         $statement->execute();
     }
+    static function approveUser()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+            try {
+                $GLOBALS['f3']->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                echo 'connected to database!';
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+
+            $id = $_POST['id'];
+
+            //define query
+            $sql = 'UPDATE users Set account_activated = 1  WHERE id = :ID ';
+
+            //prepare the statement
+            $statement = $GLOBALS['f3']->_dbh->prepare($sql);
+
+            //bind parameters
+            $statement->bindParam(':ID', $id);
+
+
+            $statement->execute();
+            echo $id;
+
+        }
+    }
 }
