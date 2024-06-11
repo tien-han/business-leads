@@ -288,7 +288,7 @@ class Controller
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             //echo 'connected to database!';
         } catch (PDOException $e) {
-            die($e->getMessage());
+            $this->_f3->reroute("error");
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $firstName = $_POST['firstName'];
@@ -540,7 +540,7 @@ class Controller
                 $this->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
                 echo 'connected to database!';
             } catch (PDOException $e) {
-                die($e->getMessage());
+                $this->_f3->reroute("error");
             }
             $id = $_POST['id'];
             $sql = 'DELETE FROM users WHERE id = :ID ';
