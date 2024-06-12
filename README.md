@@ -36,7 +36,7 @@ order to see business lead data and approve other users. They will see business 
    `get-all-business-leads.php`, and `get-filtered-business-leads.php`) and prepared statements are used for security.
 4. Data can be added and viewed.
     - New users can be added via the `Sign In` page, and seen in the `Approval` page.
-    - Business leads can be added via the `Main Form`page, and seen in the `Dashboard` page.
+    - Business leads can be added via the `Leads Form`page, and seen in the `Dashboard` page.
 5. Has a history of commits from both team members to a Git repository. Commits are clearly commented.
     - This can be seen by going to the repository and clicking the tab `Insights` -> `Contributors`.
     - All teammates have a history of commits with meaningful commit messages.

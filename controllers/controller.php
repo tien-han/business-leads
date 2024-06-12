@@ -116,7 +116,14 @@ class Controller
         //Render a view page
         $view = new Template();
         echo $view->render('views/contact.html');
-        session_destroy();
+
+        //We have to unset the contact us session details here (rather than session_destroy(),
+        //because session_destroy() would also remove our user log in session.
+        unset($_SESSION['firstName']);
+        unset($_SESSION['lastName']);
+        unset($_SESSION['email']);
+        unset($_SESSION['concern']);
+        unset($_SESSION['contactSubmitted']);
     }
 
     /**
@@ -169,11 +176,24 @@ class Controller
             if ($allValid) {
                 //Save the user data into the hive for the session
                 $userDetails = DataLayer::getUser($email);
-                $user = new User($userDetails['first_name'],
-                                $userDetails['last_name'],
-                                $userDetails['email'],
-                                9701, //Make sure to remove this hardcoded slic #
-                                $userDetails['role']);
+
+                //TODO: Handle a case where the user isn't activated yet
+
+                //If the person is an admin (Division Manager)
+                if ($userDetails['role'] == "Division Manager") {
+                    $user = new Admin(
+                        $userDetails['first_name'],
+                        $userDetails['last_name'],
+                        $userDetails['email'],
+                        $userDetails['slic']);
+                } else {
+                    $user = new User(
+                        $userDetails['first_name'],
+                        $userDetails['last_name'],
+                        $userDetails['email'],
+                        $userDetails['slic']);
+                }
+
                 $this->_f3->set('SESSION.user', $user);
 
                 $this->_f3->reroute("dashboard");
@@ -394,7 +414,7 @@ class Controller
     }
 
     /**
-     * Method for rendering the main form, where business leads are submitted
+     * Method for rendering the Leads Form, where business leads are submitted
      *
      * @return void
      */
@@ -490,7 +510,7 @@ class Controller
     }
 
     /**
-     * Method for rendering the main form's summary page
+     * Method for rendering the Leads Form's summary page
      * which will show the information entered on the form
      * @return void
      */

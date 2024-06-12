@@ -1,41 +1,111 @@
 <!--
     @author: Tien Han, Sage Markwardt, Garrett Ballreich
-    @date: 5/29/2024
+    @date: 6/12/2024
     @description: Contact Us page for the UPS Business Leads website
 -->
 
 <include href="views/header.html"></include>
+
 <body>
-    <!--  Navbar  -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top mb-3">
-        <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" type="text/html" href="{{ @BASE }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" type="text/html" href="contact">Contact Us
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" type="text/html" href="faq">FAQ
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" type="text/html" href="form">Leads Form
-                    </a>
-                </li>
-            </ul>
-            <a class="ms-auto me-3 nav-link" type="text/html" href="login">Login</a>
-        </div>
-    </nav>
+    <check if="{{ isset(@SESSION.user) }}">
+        <!--If a person is logged in-->
+        <true>
+            <!--If a person is an admin-->
+            <check if="{{ get_Class(@SESSION.user) == 'Admin' }}">
+                <true>
+                    <!--  Navbar  -->
+                    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                        <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="dashboard">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="approval">Pending Approvals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="contact">Contact Us
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="faq">FAQ
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="form">Leads Form
+                                    </a>
+                                </li>
+                            </ul>
+                            <a class="ms-auto me-3 nav-link" type="text/html" href="{{ @BASE }}">Logout</a>
+                        </div>
+                    </nav>
+                </true>
+                <!--If a person is NOT an admin-->
+                <false>
+                    <!--  Navbar  -->
+                    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                        <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="dashboard">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="contact">Contact Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="faq">FAQ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="form">Leads Form</a>
+                                </li>
+                            </ul>
+                            <a class="ms-auto me-3 nav-link" type="text/html" href="{{ @BASE }}">Logout</a>
+                        </div>
+                    </nav>
+                </false>
+            </check>
+        </true>
+
+        <!--If a person is NOT logged in-->
+        <false>
+            <!--  Navbar  -->
+            <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="{{ @BASE }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="contact">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="faq">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="form">Leads Form</a>
+                        </li>
+                    </ul>
+                    <a class="ms-auto me-3 nav-link" type="text/html" href="login">Login</a>
+                </div>
+            </nav>
+        </false>
+    </check>
 
     <div>
         <check if="{{ isset(@SESSION.contactSubmitted) && @SESSION.contactSubmitted == true}}">
+            <!--If a user has submitted the contact form-->
             <true>
                 <div class="form-container p-5">
                     <h4 class="text-center mt-3 mb-5 form-header">Your Response Has Been Submitted</h4>
@@ -48,8 +118,8 @@
                         <p><b>Concern:</b> {{ @SESSION.concern }}</p>
                     </div>
                 </div>
-
             </true>
+            <!--If the user has NOT submitted the contact form-->
             <false>
                 <!--Form for Contacting the UPS team-->
                 <form action="#" method="post" class="form-container p-5">

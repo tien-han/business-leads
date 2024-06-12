@@ -14,14 +14,6 @@ error_reporting(E_ALL);
 //Require the autoload file
 require_once('vendor/autoload.php');
 
-//Require the form validation file
-//require_once('model/validate.php');
-//need to update composer with /classes
-//require_once('classes/lead.php');
-//require_once('classes/user.php');
-
-$obj="";
-
 //Instantiate the F3 Base class (Fat-Free)
 $f3 = Base::instance();
 $controller = new Controller($f3);
@@ -83,7 +75,7 @@ $f3-> route('GET|POST /approval', function() {
 });
 
 /**
- * Route to the main form page
+ * Route to the Leads Form page
  */
 $f3-> route('GET|POST /form', function() {
     $GLOBALS['controller']->mainForm();

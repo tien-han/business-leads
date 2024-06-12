@@ -4,8 +4,8 @@
  * The DataLayer class defines methods that can be called to get
  * data from the database.
  *
- * @author Tien Han <tienthuyhan@gmail.com>, Sage Markwardt
- * @date   6/10/2024
+ * @author Tien Han <tienthuyhan@gmail.com>, Sage Markwardt, Garrett Ballreich
+ * @date   6/12/2024
  */
 class DataLayer
 {
@@ -29,8 +29,9 @@ class DataLayer
         }
 
         //2. Prepare the SQL statement
-        $sql = "SELECT password FROM users WHERE email='" . $email . "'";
+        $sql = "SELECT password FROM users WHERE email=:email";
         $statement = $dbh->prepare($sql);
+        $statement->bindParam(':email', $email);
 
         //3. Execute the SQL statement
         $statement->execute();
@@ -64,8 +65,9 @@ class DataLayer
         }
 
         //2. Prepare the SQL statement
-        $sql = "SELECT id, first_name, last_name, email, account_activated, role FROM users WHERE email='" . $email . "'";
+        $sql = "SELECT id, first_name, last_name, email, account_activated, role, slic FROM users WHERE email=:email";
         $statement = $dbh->prepare($sql);
+        $statement->bindParam(':email', $email);
 
         //3. Execute the SQL statement
         $statement->execute();

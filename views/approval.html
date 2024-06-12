@@ -1,97 +1,172 @@
 <!--
-    @author: Garrett Ballreich
-    @date: 6/11/2024
-    @description: User approval page.
+    @author: Garrett Ballreich, Tien Han
+    @date: 6/12/2024
+    @description: User account activation approval page.
 -->
 <include href="views/header.html"></include>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light sticky-top">
-    <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" type="text/html" href="{{ @BASE }}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" type="text/html" href="contact">Contact Us
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" type="text/html" href="faq">FAQ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" type="text/html" href="form">Leads Form
-                </a>
-            </li>
-        </ul>
-        <a class="ms-auto me-3 nav-link" type="text/html" href="{{ @BASE }}">Logout</a>
-    </div>
-</nav>
-
-    <div>
-        <h1>Approve Pending Requests</h1>
-        <table id="table" class="approval_request">
-            <tr>
-                <td>
-                   <b>Last Name</b>
-                </td>
-                <td>
-                    <b>First Name</b>
-                </td>
-                <td>
-                   <b>Email</b>
-                </td>
-                <td>
-                    <b>Role</b>
-                </td>
-                <td>
-                    <b>Request Date</b>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-            <check if="{{ @approval }}">
-                <!-- Iterate over each item in the 'approval' array -->
-                <repeat group="{{ @approval }}" value="{{ @row }}">
-                   <tr>
-                       <td>
-                            {{ @row.last_name}}
-                       </td>
-                       <td>
-                            {{ @row.first_name}}
-                       </td>
-                       <td>
-                           {{ @row.email}}
-                       </td>
-                       <td>
-                           {{ @row.role}}
-                       </td>
-                       <td>
-                           {{ @row.created_at}}
-                       </td>
-                       <td>
-                           <!--add event listener with id from db -->
-                           <button class="btn btn-primary approve_button" type="submit" name="approve_button"
-                                   value="approve" id="{{ @row.id}}">Approve</button>
-                       </td>
-                       <td>
-                           <button class="btn btn-danger delete_button" type="submit" name="delete_button"
-                                   value="delete" data-id="{{ @row.id}}">Delete</button>
-                       </td>
-                   </tr>
-                </repeat>
+    <check if="{{ isset(@SESSION.user) }}">
+        <!--If a person is logged in-->
+        <true>
+            <!--If a person is an admin-->
+            <check if="{{ get_Class(@SESSION.user) == 'Admin' }}">
+                <true>
+                    <!--  Navbar  -->
+                    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                        <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="dashboard">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="approval">Pending Approvals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="contact">Contact Us
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="faq">FAQ
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="form">Leads Form
+                                    </a>
+                                </li>
+                            </ul>
+                            <a class="ms-auto me-3 nav-link" type="text/html" href="{{ @BASE }}">Logout</a>
+                        </div>
+                    </nav>
+                </true>
+                <!--If a person is NOT an admin-->
+                <false>
+                    <!--  Navbar  -->
+                    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                        <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="dashboard">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="contact">Contact Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="faq">FAQ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" type="text/html" href="form">Leads Form</a>
+                                </li>
+                            </ul>
+                            <a class="ms-auto me-3 nav-link" type="text/html" href="{{ @BASE }}">Logout</a>
+                        </div>
+                    </nav>
+                </false>
             </check>
-        </table>
-    </div>
+
+            <div class="container">
+                <h1 class="text-center mt-3">Approve Pending Requests</h1>
+                <table id="table" class="approval_request mx-3">
+                    <tr>
+                        <td>
+                            <b>Last Name</b>
+                        </td>
+                        <td>
+                            <b>First Name</b>
+                        </td>
+                        <td>
+                            <b>Email</b>
+                        </td>
+                        <td>
+                            <b>Role</b>
+                        </td>
+                        <td>
+                            <b>Request Date</b>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <check if="{{ @approval }}">
+                        <!-- Iterate over each item in the 'approval' array -->
+                        <repeat group="{{ @approval }}" value="{{ @row }}">
+                            <tr>
+                                <td>
+                                    {{ @row.last_name}}
+                                </td>
+                                <td>
+                                    {{ @row.first_name}}
+                                </td>
+                                <td>
+                                    {{ @row.email}}
+                                </td>
+                                <td>
+                                    {{ @row.role}}
+                                </td>
+                                <td>
+                                    {{ @row.created_at}}
+                                </td>
+                                <td>
+                                    <!--add event listener with id from db -->
+                                    <button class="btn btn-primary approve_button" type="submit" name="approve_button"
+                                            value="approve" id="{{ @row.id}}">Approve</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger delete_button" type="submit" name="delete_button"
+                                            value="delete" data-id="{{ @row.id}}">Delete</button>
+                                </td>
+                            </tr>
+                        </repeat>
+                    </check>
+                </table>
+            </div>
+        </true>
+
+        <!--If a person is NOT logged in-->
+        <false>
+            <!--  Navbar  -->
+            <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="{{ @BASE }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="contact">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="faq">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" type="text/html" href="form">Leads Form</a>
+                        </li>
+                    </ul>
+                    <a class="ms-auto me-3 nav-link" type="text/html" href="login">Login</a>
+                </div>
+            </nav>
+            <h4 class="text-center mt-3">Please log in to access this page.</h4>
+        </false>
+    </check>
+
+    <!--Scripts-->
+    <!-- Bootstrap CDN link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- JS Script for approval users -->
+    <script src="scripts/user-approval.js"></script>
 </body>
 </html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- JS Script for approval users -->
-<script src="scripts/user-approval.js"></script>
