@@ -10,7 +10,9 @@ $(".approve_button").click (function(){
     var id = ($(this).attr("id"));
     //addUser(id);
     $.ajax({
-        url: 'https://garrettballreich.greenriverdev.com/328/business-leads/approveRequest',
+        // url: 'https://garrettballreich.greenriverdev.com/328/business-leads/approveRequest',
+        // url: 'https://smarkwardt.greenriverdev.com/328/business-leads/approveRequest',
+        url: 'https://tienthan.greenriverdev.com/328/business-leads/approveRequest',
         type: 'POST',
         data: {id: id},
         success: function(response) {
@@ -28,7 +30,9 @@ $(".delete_button").click (function(){
     var id = ($(this).attr("data-id"));
 
     $.ajax({
-        url: 'https://garrettballreich.greenriverdev.com/328/business-leads/deleteRequest',
+        // url: 'https://garrettballreich.greenriverdev.com/328/business-leads/deleteRequest',
+        // url: 'https://smarkwardt.greenriverdev.com/328/business-leads/deleteRequest',
+        url: 'https://tienthan.greenriverdev.com/328/business-leads/deleteRequest',
         type: 'POST',
         data: {id: id},
         success: function(response) {

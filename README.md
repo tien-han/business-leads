@@ -61,3 +61,7 @@ order to see business lead data and approve other users. They will see business 
 ## Temporary Login Credentials for Testing
 - email: `admin@ups.com`
 - password: `admin`
+
+## Special Considerations for grading & project management:
+- The files `approveRequest.html` and `deleteRequest.html` are unable to have any additional headers/code at the
+   moment, as they are being used only to handle requests.
