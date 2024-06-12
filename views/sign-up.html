@@ -89,9 +89,9 @@
             <label for="role" class="form-label mt-3"><b>Role</b></label>
             <select class="form-select" id="role" name="role">
                 <option selected disabled>Select your role</option>
-                <option value="CM">Center Manager</option>
-                <option value="BD">Business Development</option>
-                <option value="DM">Division Manager</option>
+                <option value="Center Manager">Center Manager</option>
+                <option value="Business Development">Business Development</option>
+                <option value="Division Manager">Division Manager</option>
             </select>
             <check if="{{ isset(@errors['roleSignUpError']) }}">
                 <span class="err">{{ @errors['roleSignUpError']}}</span>

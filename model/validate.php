@@ -132,6 +132,6 @@ class Validate
      */
     static function validRole($role)
     {
-        return ($role === "CM" || $role == "BD" || $role == "DM");
+        return ($role === "Center Manager" || $role == "Business Development" || $role == "Division Manager");
     }
 }
