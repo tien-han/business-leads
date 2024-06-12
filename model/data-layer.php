@@ -201,7 +201,11 @@ class DataLayer
     /**
      * This function will UPDATE a user's password
      * from the old to their chosen new one.
+     *
+     * @param $hashKey
+     * @param $email
      * @param $password
+     *
      * @return bool
      */
     static function resetPassword($hashKey, $email, $password) : bool
@@ -232,7 +236,9 @@ class DataLayer
     /**
      * This script function will delete a key from the database if the user
      * clicks on a password reset email and the site sees it's expired.
+     *
      * @param $email
+     *
      * @return void
      */
     static function deleteExpiredResetKey($email) : void
@@ -257,17 +263,20 @@ class DataLayer
     }
 
     /**
-     * @param $firstName
-     * @param $lastName
-     * @param $email
-     * @param $password
-     * @param $status
-     * @param $role
-     * @param $date
+     * Adds a user to the database.
+     *
+     * @param string $firstName the user's first name
+     * @param string $lastName the user's last name
+     * @param string $email the user's email
+     * @param string $password the user's password
+     * @param int $status the user's activation status - should be 0
+     * @param string $role the user's role
+     * @param string $date the timestamp of "now" (when the user is added to the database)
+     *
      * @return void
-     * adds a user to the database
      */
-    static function addUser($firstName, $lastName, $email, $password, $status,$role, $date)
+    static function addUser(string $firstName, string $lastName, string $email, string $password,
+                            int $status, string $role, string $date) : void
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
 
@@ -292,10 +301,11 @@ class DataLayer
     }
 
     /**
+     * Displays users that have not been approved
+     *
      * @return void
-     * displays only users that have not been approved
      */
-    static function displayUnapproved()
+    static function displayUnapproved() : void
     {
         //connect to db
         require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
@@ -321,7 +331,23 @@ class DataLayer
         //add to session
         $GLOBALS['f3']->set('approval', $result);
     }
-    static function addLead($businessName, $businessAddress, $contactName, $businessPhone, $contactEmail, $driverName, $driverID, $slic)
+
+    /**
+     * Add a lead to the database.
+     *
+     * @param string $businessName the name of the business
+     * @param string $businessAddress the address of the business
+     * @param string $contactName the contact name
+     * @param string $businessPhone the business phone number
+     * @param string $contactEmail the contact email
+     * @param string $driverName the UPS driver name
+     * @param int $driverID the UPS driver's ID (7 digits)
+     * @param int $slic the UPS driver's SLIC
+     *
+     * @return void
+     */
+    static function addLead(string $businessName, string $businessAddress, string $contactName, string $businessPhone,
+                            string $contactEmail, string $driverName, int $driverID, int $slic) : void
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
 
@@ -351,7 +377,13 @@ class DataLayer
 
         $statement->execute();
     }
-    static function approveUser()
+
+    /**
+     * Approve a user to "activate" their account.
+     *
+     * @return void
+     */
+    static function approveUser() : void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
@@ -378,6 +410,35 @@ class DataLayer
             $statement->execute();
             echo $id;
 
+        }
+    }
+
+    /**
+     * Delete a user in the database.
+     *
+     * @return void
+     */
+    static function deleteUser() : void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            require $_SERVER['DOCUMENT_ROOT'] . '/../config.php';
+
+            try {
+                $GLOBALS['f3']->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+                echo 'connected to database!';
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+            $id = $_POST['id'];
+            $sql = 'DELETE FROM users WHERE id = :ID ';
+            //prepare the statement
+            $statement = $GLOBALS['f3']->_dbh->prepare($sql);
+
+            //bind parameters
+            $statement->bindParam(':ID', $id);
+
+            $statement->execute();
         }
     }
 }
